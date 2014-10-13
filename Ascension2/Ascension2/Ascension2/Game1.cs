@@ -32,9 +32,17 @@ namespace Ascension2
 
         proceduralGenerator generator;
 
+<<<<<<< HEAD
         GameObject[] gameObjects = new GameObject[0];
 
 
+=======
+        Texture2D playerTexture;
+        Player player;
+
+        private SpriteFont debugFont;
+        private bool enableDebug = true;
+>>>>>>> 2cd682fd3f9358ec388e5ee948dea24977c39279
 
         public Game1()
         {
@@ -86,6 +94,11 @@ namespace Ascension2
             camera = new Camera();
 
             generator = new proceduralGenerator();
+
+            playerTexture = Content.Load<Texture2D>("Simon/Player");
+            player = new Player(playerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height - 90), spriteBatch);
+
+            debugFont = Content.Load<SpriteFont>("Simon/DebugFont");
         }
 
         private void generateLevel()
@@ -132,6 +145,7 @@ namespace Ascension2
                 gameObjects[i].Update(theGameTime);
             }
             camera.Update(theGameTime);
+            player.Update(theGameTime);
             generateLevel();
         }
 
@@ -147,6 +161,19 @@ namespace Ascension2
             spriteBatch.Begin();
             drawLevel(thisLevel);
             spriteBatch.End();
+
+            string debugInfo = string.Format("Jetpack Fuel: {0:0.0}", player.getFuelLevel);
+            string debugInfo2 = string.Format("Location: {0:0.0}", player.getPlayerBounds);
+            string debugInfo3 = string.Format("X Velocity: {0:0}, Y Velocity: {1:0}", player.GetHorizontalVelocity, player.GetVerticalVelocity);
+
+            player.Draw(gameTime);
+
+            if (enableDebug)
+            {
+                spriteBatch.DrawString(debugFont, debugInfo, new Vector2(10, 0), Color.White);
+                spriteBatch.DrawString(debugFont, debugInfo2, new Vector2(10, 20), Color.White);
+                spriteBatch.DrawString(debugFont, debugInfo3, new Vector2(10, 40), Color.White);
+            }
 
             base.Draw(gameTime);
         }
