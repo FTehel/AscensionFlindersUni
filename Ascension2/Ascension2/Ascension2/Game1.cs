@@ -32,17 +32,14 @@ namespace Ascension2
 
         proceduralGenerator generator;
 
-<<<<<<< HEAD
         GameObject[] gameObjects = new GameObject[0];
 
 
-=======
         Texture2D playerTexture;
         Player player;
 
         private SpriteFont debugFont;
         private bool enableDebug = true;
->>>>>>> 2cd682fd3f9358ec388e5ee948dea24977c39279
 
         public Game1()
         {
@@ -98,6 +95,7 @@ namespace Ascension2
             playerTexture = Content.Load<Texture2D>("Simon/Player");
             player = new Player(playerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height - 90), spriteBatch);
 
+            camera.parent = player;
             debugFont = Content.Load<SpriteFont>("Simon/DebugFont");
         }
 
@@ -160,7 +158,6 @@ namespace Ascension2
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             drawLevel(thisLevel);
-            spriteBatch.End();
 
             string debugInfo = string.Format("Jetpack Fuel: {0:0.0}", player.getFuelLevel);
             string debugInfo2 = string.Format("Location: {0:0.0}", player.getPlayerBounds);
@@ -176,6 +173,8 @@ namespace Ascension2
             }
 
             base.Draw(gameTime);
+            spriteBatch.End();
+
         }
 
         private void drawTile(gridSpace grid)

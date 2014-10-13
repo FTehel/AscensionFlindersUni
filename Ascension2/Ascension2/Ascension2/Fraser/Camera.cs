@@ -13,7 +13,7 @@ namespace Ascension2
         public Vector2 position;
         Vector2 velocity;
         float speed = 10000;
-        GameObject parent;
+        public GameObject parent;
 
         public Vector2 worldToScreen(Vector2 other, int width, int height)
         {

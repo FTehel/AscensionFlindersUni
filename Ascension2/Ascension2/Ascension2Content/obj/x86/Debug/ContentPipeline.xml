@@ -10,6 +10,24 @@
       <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\bricksTexture.xnb</Output>
       <Time>2014-10-13T11:32:47.4419438+10:30</Time>
     </Item>
+    <Item>
+      <Source>Simon\Player.png</Source>
+      <Name>Simon\Player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\Player.xnb</Output>
+      <Time>2014-10-13T12:17:22.364861+10:30</Time>
+    </Item>
+    <Item>
+      <Source>Simon\DebugFont.spritefont</Source>
+      <Name>Simon\DebugFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\DebugFont.xnb</Output>
+      <Time>2014-10-13T12:17:22.3628603+10:30</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
