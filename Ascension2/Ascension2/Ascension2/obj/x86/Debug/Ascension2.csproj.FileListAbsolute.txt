@@ -5,3 +5,12 @@ C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascens
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.exe
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.pdb
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\bricksTexture.xnb
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\bricksTexture.xnb
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\Player.xnb
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\DebugFont.xnb
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Ascension2.exe
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Ascension2.pdb
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.csprojResolveAssemblyReference.cache
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.exe
+C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.pdb
