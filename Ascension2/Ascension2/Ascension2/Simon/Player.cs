@@ -15,6 +15,8 @@ namespace Ascension2
 {
     public class Player : GameObject
     {
+        Texture2D texture;
+
         //Used to keypress for jumping
         KeyboardState oldState;
 
@@ -42,7 +44,7 @@ namespace Ascension2
         int playerHeight = 90;
 
         //Sprite variables
-        public SpriteBatch SpriteBatch { get; set; }
+        public SpriteBatch spriteBatch { get; set; }
         SpriteEffects spriteEffects = SpriteEffects.None;
         //Used to shift sprite sheet
         int playerEvolution = 0;
@@ -65,8 +67,9 @@ namespace Ascension2
 
         public Player(Texture2D texture, Vector2 position, SpriteBatch batch)
         {
+            this.texture = texture;
             oldState = Keyboard.GetState();
-            SpriteBatch = batch;
+            spriteBatch = batch;
             jetpackFuel = maxFuel;
         }
 
@@ -95,7 +98,7 @@ namespace Ascension2
             startingFrame += (int)(time * framesPerSecond) % frameCount;
             if (texture != null)
             {
-                SpriteBatch.Draw(texture, position, new Rectangle(startingFrame * playerWidth, playerEvolution * playerHeight, playerWidth, playerHeight), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
+                spriteBatch.Draw(texture, position, new Rectangle(startingFrame * playerWidth, playerEvolution * playerHeight, playerWidth, playerHeight), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
             }
         }
 
@@ -122,11 +125,11 @@ namespace Ascension2
             }
 
             //Jumping (    NEED COLLISION DETECTION FOR FLOOR - isOnGround()    )
-            if (newState.IsKeyDown(Keys.Up) && position.Y == 678)
+            if (newState.IsKeyDown(Keys.Up) && position.Y == 300)
             {
                 if (!oldState.IsKeyDown(Keys.Up))
                 {
-                    VMovement = -Vector2.UnitY * 30;
+                    VMovement = Vector2.UnitY * 30;
                     jumping = true;
                 }
                 else
@@ -135,7 +138,7 @@ namespace Ascension2
                 }
             }
             //if isOnGround() then jumping false
-            else if (position.Y == 678)
+            else if (position.Y == 300)
             {
                 jumping = false;
             }
@@ -149,9 +152,9 @@ namespace Ascension2
 
             //Simulate gravity
             //IF !isOnGround() THEN
-            if (position.Y < 678)
+            if (position.Y > 300)
             {
-                VMovement += Vector2.UnitY * 2.4f;
+                VMovement -= Vector2.UnitY * 2.4f;
             }
 
             //Simulate friction
@@ -162,9 +165,9 @@ namespace Ascension2
             position += VMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
 
             //Temporary measures to prevent character leaving screen and test item progression
-            if (position.Y > 678)
+            if (position.Y < 300)
             {
-                //position = new Vector2(position.X, 678);
+                position = new Vector2(position.X, 300);
             }
 
             if (position.X < 0)
@@ -202,7 +205,7 @@ namespace Ascension2
 
             if (newState.IsKeyDown(Keys.Space) && jetpackFuel > 0)
             {
-                VMovement = -Vector2.UnitY * 15;
+                VMovement = Vector2.UnitY * 15;
                 jetpackFuel -= 20;
                 flying = true;
             }
