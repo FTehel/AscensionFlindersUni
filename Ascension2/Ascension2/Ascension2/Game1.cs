@@ -92,7 +92,7 @@ namespace Ascension2
 
         private void loadTextures()
         {
-            brickTexture = Content.Load<Texture2D>("Fraser/bricksTexture.jpg");
+            brickTexture = Content.Load<Texture2D>("Fraser/bricksTexture");
         }
 
         /// <summary>
