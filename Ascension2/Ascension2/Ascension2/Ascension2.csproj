@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fraser\Camera.cs" />
+    <Compile Include="Fraser\GameObject.cs" />
     <Compile Include="Fraser\floor.cs" />
     <Compile Include="Fraser\gridLine.cs" />
     <Compile Include="Fraser\gridSpace.cs" />

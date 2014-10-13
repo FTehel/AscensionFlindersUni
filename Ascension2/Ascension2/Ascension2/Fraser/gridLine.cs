@@ -33,7 +33,7 @@ namespace Ascension2
             {
                 int coordMult = (int)Math.Pow((double)childrenNumber, (double)level);
                 Vector2 newCoordinate = new Vector2(thisXCoordinate, index * coordMult);
-                gridSpace newGrid = new gridSpace(level, size, getPosition(xCoord, yCoord), newCoordinate, childrenNumber, null);
+                gridSpace newGrid = new gridSpace(level, new Vector2(size,size), getPosition(xCoord, yCoord), newCoordinate, childrenNumber, null);
                 addGrid(index, newGrid);
             }
             grids[index].fillGrid(xCoord, yCoord, texture);

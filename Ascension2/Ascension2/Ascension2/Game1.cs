@@ -32,6 +32,10 @@ namespace Ascension2
 
         proceduralGenerator generator;
 
+        GameObject[] gameObjects = new GameObject[0];
+
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -123,6 +127,10 @@ namespace Ascension2
 
         public void updateFunction(GameTime theGameTime)
         {
+            for (int i = 0; i < gameObjects.Length; i++)
+            {
+                gameObjects[i].Update(theGameTime);
+            }
             camera.Update(theGameTime);
             generateLevel();
         }
@@ -152,7 +160,7 @@ namespace Ascension2
                     if (grid.level == 0)
                     {
                         Vector2 screenPos = camera.worldToScreen(grid.position, screenWidth, screenHeight);
-                        Rectangle drawRect = new Rectangle((int)screenPos.X, (int)screenPos.Y, (int)grid.size, (int)grid.size);
+                        Rectangle drawRect = new Rectangle((int)screenPos.X, (int)screenPos.Y, (int)grid.size.X, (int)grid.size.Y);
                         spriteBatch.Draw(grid.texture, drawRect, Color.White);
                     }
                     else
@@ -183,6 +191,7 @@ namespace Ascension2
 
         private void drawLevel(Level levelToDraw)
         {
+
             for (var i = 0; i < levelToDraw.tilesXPositive.Length; i++)
             {
                 drawTileLine(levelToDraw.tilesXPositive[i]);
@@ -191,6 +200,18 @@ namespace Ascension2
             {
                 drawTileLine(levelToDraw.tilesXNegative[i]);
             }
+        }
+
+        public void addGameObject(GameObject newObject)
+        {
+            GameObject[] temp = new GameObject[gameObjects.Length + 1];
+            for (int i = 0; i < gameObjects.Length; i++)
+            {
+                temp[i] = gameObjects[i];
+
+            }
+            temp[gameObjects.Length] = newObject;
+            gameObjects = temp;
         }
     }
 }

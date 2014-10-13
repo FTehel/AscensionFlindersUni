@@ -12,20 +12,20 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Ascension2
 {
-    class gridSpace
+    class gridSpace : GameObject
     {
         public Vector2 thisCoordinate = new Vector2(0,0);
         public gridSpace[,] children;
         public int level;
         public int sizeInGrids;
-        public float size;
+        public Vector2 size;
         public int childrenNumber;
         public Vector2 position;
         public Texture2D texture;
         public gridSpace parent;
         public Boolean isFilled;
 
-        public gridSpace(int newLevel, float newSize, Vector2 newPosition, Vector2 newCoordinate, int thisChildrenNumber, gridSpace parent){
+        public gridSpace(int newLevel, Vector2 newSize, Vector2 newPosition, Vector2 newCoordinate, int thisChildrenNumber, gridSpace parent){
             
 
             this.level = newLevel;
@@ -40,7 +40,7 @@ namespace Ascension2
             if (newLevel != 0)
             {
                 this.children = new gridSpace[thisChildrenNumber, thisChildrenNumber];
-                float childSize = this.size / thisChildrenNumber;
+                float childSize = this.size.X / thisChildrenNumber;
                 var childLevel = level - 1;
                 Vector2 childPos = position;
 
@@ -52,7 +52,7 @@ namespace Ascension2
                     for (int j = 0; j < thisChildrenNumber; j++)
                         {
                             Vector2 newCoordinates = new Vector2(this.thisCoordinate.X + (xCoordinate * j), this.thisCoordinate.Y + (yCoordinate * i));
-                            children[j,i] = new gridSpace(childLevel, childSize, childPos, newCoordinates, thisChildrenNumber, this);
+                            children[j,i] = new gridSpace(childLevel, new Vector2(childSize, childSize), childPos, newCoordinates, thisChildrenNumber, this);
                             childPos.X += childSize;
                         }
                     childPos.Y += childSize;

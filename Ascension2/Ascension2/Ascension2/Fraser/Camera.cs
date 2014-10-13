@@ -13,6 +13,7 @@ namespace Ascension2
         public Vector2 position;
         Vector2 velocity;
         float speed = 10000;
+        GameObject parent;
 
         public Vector2 worldToScreen(Vector2 other, int width, int height)
         {
@@ -24,8 +25,12 @@ namespace Ascension2
 
         public void Update(GameTime theGameTime)
         {
-            velocity = getMovementDirection();
+            //velocity = getMovementDirection();
             move(theGameTime);
+            if (parent != null)
+            {
+                position = parent.position;
+            }
         }
 
         public void move(GameTime theGameTime)
