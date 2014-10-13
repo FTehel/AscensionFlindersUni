@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{A1849D66-D3F0-4235-A5F9-9DC23520513C}</ProjectGuid>
+    <ProjectGuid>{F43A92B1-11DE-4099-8D75-A397FD736B60}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ascension</RootNamespace>
-    <AssemblyName>Ascension</AssemblyName>
+    <RootNamespace>Ascension2</RootNamespace>
+    <AssemblyName>Ascension2</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>Reach</XnaProfile>
-    <XnaCrossPlatformGroupID>6e41e79d-b250-438c-8fb3-6091da299260</XnaCrossPlatformGroupID>
+    <XnaCrossPlatformGroupID>c666759f-bbba-4cf0-9271-d6cee5c12e82</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
@@ -72,27 +72,19 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fraser\Camera.cs" />
-    <Compile Include="Fraser\floor.cs" />
-    <Compile Include="Fraser\gridLine.cs" />
-    <Compile Include="Fraser\gridSpace.cs" />
-    <Compile Include="Fraser\Level.cs" />
-    <Compile Include="Fraser\proceduralGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bricksTexture.jpg" />
-    <Content Include="Fraser\bricksTexture.jpg" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AscensionContent\AscensionContent.contentproj">
-      <Name>AscensionContent</Name>
+    <ProjectReference Include="..\Ascension2Content\Ascension2Content.contentproj">
+      <Name>Ascension2Content</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>
