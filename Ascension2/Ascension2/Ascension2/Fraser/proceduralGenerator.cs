@@ -17,6 +17,7 @@ namespace Ascension2
         int towerWidth = 80;
         int floorHeight = 10;
         int towerStart = -80;
+        public int towerBaseHeight = 100;
 
         Vector2 roomWidth = new Vector2(10, 30);
 
@@ -24,7 +25,7 @@ namespace Ascension2
         Floor lastFloor;
         Floor current;
 
-        int currentHeight = 0;
+        public int currentHeight = 0;
 
         float generateDistance = 1.5f;
 
@@ -69,10 +70,12 @@ namespace Ascension2
                 createLine(currentX, startY, currentX, endY, texture, levelToFill);
                 if (currentX < endX)
                 {
+                    Console.WriteLine("There are " + currentX + " blocks");
                     currentX++;
                 }
                 else
                 {
+                    Console.WriteLine("There are " + currentX + " blocks");
                     currentX--;
                 }
             }
@@ -127,6 +130,11 @@ namespace Ascension2
             if(isHeightAboveScreen(gridSize, cameraHeight)){
                 createFloor(texture, levelToFill);
             }
+        }
+
+        public void generateGround(Texture2D texture, Level levelToFill)
+        {
+            createBlock(-1000, 0, 0, towerBaseHeight, texture, levelToFill);
         }
     }
 }
