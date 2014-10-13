@@ -91,6 +91,8 @@ namespace Ascension2
             camera = new Camera();
 
             generator = new proceduralGenerator();
+            generator.currentHeight = generator.towerBaseHeight;
+            generator.generateGround(brickTexture, thisLevel);
 
             playerTexture = Content.Load<Texture2D>("Simon/Player");
             player = new Player(playerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height - 90), spriteBatch);
@@ -103,6 +105,7 @@ namespace Ascension2
         {
 
             generator.generate(thisLevel.gridSize, (int)camera.position.Y, brickTexture, thisLevel);
+            
         }
 
         private void loadTextures()
