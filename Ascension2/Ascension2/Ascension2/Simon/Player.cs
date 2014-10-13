@@ -82,7 +82,7 @@ namespace Ascension2
             }
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime, Vector2 camPosition)
         {
             float time = (float)gameTime.TotalGameTime.TotalSeconds;
 
@@ -98,7 +98,7 @@ namespace Ascension2
             startingFrame += (int)(time * framesPerSecond) % frameCount;
             if (texture != null)
             {
-                spriteBatch.Draw(texture, position, new Rectangle(startingFrame * playerWidth, playerEvolution * playerHeight, playerWidth, playerHeight), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
+                spriteBatch.Draw(texture, camPosition, new Rectangle(startingFrame * playerWidth, playerEvolution * playerHeight, playerWidth, playerHeight), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
             }
         }
 

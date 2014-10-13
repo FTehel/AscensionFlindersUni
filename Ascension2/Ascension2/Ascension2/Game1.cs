@@ -166,7 +166,7 @@ namespace Ascension2
             string debugInfo2 = string.Format("Location: {0:0.0}", player.getPlayerBounds);
             string debugInfo3 = string.Format("X Velocity: {0:0}, Y Velocity: {1:0}", player.GetHorizontalVelocity, player.GetVerticalVelocity);
 
-            player.Draw(gameTime);
+            player.Draw(gameTime, camera.worldToScreen(player.position, screenWidth, screenHeight));
 
             if (enableDebug)
             {
