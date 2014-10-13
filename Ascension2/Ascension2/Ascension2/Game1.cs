@@ -19,6 +19,19 @@ namespace Ascension2
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        GraphicsDevice device;
+
+        int screenWidth;
+        int screenHeight;
+
+        Level thisLevel;
+
+        Texture2D brickTexture;
+
+        Camera camera;
+
+        proceduralGenerator generator;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -46,8 +59,40 @@ namespace Ascension2
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            loadFunction();
             // TODO: use this.Content to load your game content here
+        }
+
+        public void loadFunction()
+        {
+
+            device = graphics.GraphicsDevice;
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+            Window.Title = "Tower Climb";
+
+            screenWidth = device.PresentationParameters.BackBufferWidth;
+            screenHeight = device.PresentationParameters.BackBufferHeight;
+
+            loadTextures();
+
+            thisLevel = new Level();
+            camera = new Camera();
+
+            generator = new proceduralGenerator();
+        }
+
+        private void generateLevel()
+        {
+
+            generator.generate(thisLevel.gridSize, (int)camera.position.Y, brickTexture, thisLevel);
+        }
+
+        private void loadTextures()
+        {
+            brickTexture = Content.Load<Texture2D>("Fraser/bricksTexture.jpg");
         }
 
         /// <summary>
@@ -71,8 +116,15 @@ namespace Ascension2
                 this.Exit();
 
             // TODO: Add your update logic here
+            updateFunction(gameTime);
 
             base.Update(gameTime);
+        }
+
+        public void updateFunction(GameTime theGameTime)
+        {
+            camera.Update(theGameTime);
+            generateLevel();
         }
 
         /// <summary>
@@ -84,8 +136,61 @@ namespace Ascension2
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            drawLevel(thisLevel);
+            spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void drawTile(gridSpace grid)
+        {
+            if (grid != null)
+            {
+                if (grid.isFilled)
+                {
+                    if (grid.level == 0)
+                    {
+                        Vector2 screenPos = camera.worldToScreen(grid.position, screenWidth, screenHeight);
+                        Rectangle drawRect = new Rectangle((int)screenPos.X, (int)screenPos.Y, (int)grid.size, (int)grid.size);
+                        spriteBatch.Draw(grid.texture, drawRect, Color.White);
+                    }
+                    else
+                    {
+                        for (var i = 0; i < grid.childrenNumber; i++)
+                        {
+                            for (var j = 0; j < grid.childrenNumber; j++)
+                            {
+                                drawTile(grid.children[i, j]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void drawTileLine(gridLine grid)
+        {
+            if (grid != null)
+            {
+                gridSpace[] line = grid.grids;
+                for (var i = 0; i < line.Length; i++)
+                {
+                    drawTile(line[i]);
+                }
+            }
+        }
+
+        private void drawLevel(Level levelToDraw)
+        {
+            for (var i = 0; i < levelToDraw.tilesXPositive.Length; i++)
+            {
+                drawTileLine(levelToDraw.tilesXPositive[i]);
+            }
+            for (var i = 0; i < levelToDraw.tilesXNegative.Length; i++)
+            {
+                drawTileLine(levelToDraw.tilesXNegative[i]);
+            }
         }
     }
 }

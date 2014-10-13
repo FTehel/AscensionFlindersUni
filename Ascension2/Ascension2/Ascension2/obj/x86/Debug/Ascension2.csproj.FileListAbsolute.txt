@@ -1,0 +1,6 @@
+C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.csprojResolveAssemblyReference.cache
+C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Ascension2.exe
+C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Ascension2.pdb
+C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.exe
+C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\Ascension2.pdb
