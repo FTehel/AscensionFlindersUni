@@ -133,11 +133,12 @@ namespace Ascension2
             }
 
             //Jumping (    NEED COLLISION DETECTION FOR FLOOR - isOnGround()    )
-            if (newState.IsKeyDown(Keys.Up) && position.Y == 300)
+            if (newState.IsKeyDown(Keys.Up) && position.Y == 2000)
             {
                 if (!oldState.IsKeyDown(Keys.Up))
                 {
-                    //VMovement = Vector2.UnitY * 30;
+                    VMovement = Vector2.Zero;
+                    VMovement = Vector2.UnitY * 30;
                     HMovement += Vector2.UnitY * jumpForce * getGameTime(gameTime);
                     jumping = true;
                 }
@@ -147,7 +148,7 @@ namespace Ascension2
                 }
             }
             //if isOnGround() then jumping false
-            else if (position.Y == 300)
+            else if (position.Y == 2000)
             {
                 jumping = false;
             }
@@ -161,9 +162,10 @@ namespace Ascension2
 
             //Simulate gravity
             //IF !isOnGround() THEN
-            if (position.Y > 300)
+            if (position.Y > 2000)
             {
-                //VMovement -= Vector2.UnitY * 2.4f;
+                VMovement -= Vector2.UnitY * 2.4f;
+                VMovement = Vector2.Zero;
                 HMovement -= Vector2.UnitY * gravity * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
             }
 
@@ -172,21 +174,24 @@ namespace Ascension2
 
             //Updating Vertical and Horizontal position
             position += HMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
-            //position += VMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
+            VMovement = Vector2.Zero;
+            position += VMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
 
             //Temporary measures to prevent character leaving screen and test item progression
-            if (position.Y < 300)
+            if (position.Y < 2000)
             {
-                position = new Vector2(position.X, 300);
+                position = new Vector2(position.X, 2000);
             }
             if (position.X < 0)
+
+            if (position.X < -200)
             {
-                position = new Vector2(0, position.Y);
+                position = new Vector2(-200, position.Y);
             }
 
-            if (position.X > 984)
+            if (position.X > 500)
             {
-                position = new Vector2(984, position.Y);
+                position = new Vector2(500, position.Y);
             }
             if (newState.IsKeyDown(Keys.U))
             {
@@ -217,7 +222,7 @@ namespace Ascension2
         {
             KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.Space) && jetpackFuel > 0)
+            if (newState.IsKeyDown(Keys.Space))
             {
                 //VMovement = Vector2.UnitY * 15;
                 //jetpackFuel -= 20;

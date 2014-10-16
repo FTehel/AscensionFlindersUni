@@ -11,7 +11,7 @@ namespace Ascension2.Fraser
         public Vector2 position;
         public GameObject other;
 
-        public void collision(Vector2 newPosition, GameObject otherObject)
+        public Collision(Vector2 newPosition, GameObject otherObject)
         {
             this.position = newPosition;
             this.other = otherObject;
