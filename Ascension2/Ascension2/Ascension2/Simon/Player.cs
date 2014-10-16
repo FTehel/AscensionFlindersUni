@@ -53,6 +53,14 @@ namespace Ascension2
         bool flying = false;
         ///////////////////////////
 
+        //Player Variables
+        float runSpeed = 2.0f;
+        float jetPackSpeed = 5.0f;
+        float gravity = 2.0f;
+        float jumpForce = 3.0f;
+
+        ///////////////////////
+
         //Jetpack variables////////
         const int maxFuel = 600;
         int jetpackFuel;
@@ -110,13 +118,13 @@ namespace Ascension2
             if (newState.IsKeyDown(Keys.Left))
             {
                 running = true;
-                HMovement += new Vector2(-1.5f, 0);
+                HMovement += new Vector2(-runSpeed, 0) * getGameTime(gameTime);
                 spriteEffects = SpriteEffects.FlipHorizontally;
             }
             else if (newState.IsKeyDown(Keys.Right))
             {
                 running = true;
-                HMovement += new Vector2(1.5f, 0);
+                HMovement += new Vector2(runSpeed, 0) * getGameTime(gameTime);
                 spriteEffects = SpriteEffects.None;
             }
             else
@@ -129,7 +137,8 @@ namespace Ascension2
             {
                 if (!oldState.IsKeyDown(Keys.Up))
                 {
-                    VMovement = Vector2.UnitY * 30;
+                    //VMovement = Vector2.UnitY * 30;
+                    HMovement += Vector2.UnitY * jumpForce * getGameTime(gameTime);
                     jumping = true;
                 }
                 else
@@ -147,29 +156,29 @@ namespace Ascension2
             //Jetpack
             if (playerEvolution > 0)
             {
-                jetpackMovement();
+                jetpackMovement(gameTime);
             }
 
             //Simulate gravity
             //IF !isOnGround() THEN
             if (position.Y > 300)
             {
-                VMovement -= Vector2.UnitY * 2.4f;
+                //VMovement -= Vector2.UnitY * 2.4f;
+                HMovement -= Vector2.UnitY * gravity * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
             }
 
             //Simulate friction
-            HMovement -= HMovement * new Vector2(.1f, 0);
+            //HMovement -= HMovement * new Vector2(.1f, 0);
 
             //Updating Vertical and Horizontal position
             position += HMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
-            position += VMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
+            //position += VMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
 
             //Temporary measures to prevent character leaving screen and test item progression
             if (position.Y < 300)
             {
                 position = new Vector2(position.X, 300);
             }
-
             if (position.X < 0)
             {
                 position = new Vector2(0, position.Y);
@@ -199,14 +208,20 @@ namespace Ascension2
             }
         }
 
-        public void jetpackMovement()
+        public float getGameTime(GameTime gameTime)
+        {
+            return (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
+        }
+
+        public void jetpackMovement(GameTime gameTime)
         {
             KeyboardState newState = Keyboard.GetState();
 
             if (newState.IsKeyDown(Keys.Space) && jetpackFuel > 0)
             {
-                VMovement = Vector2.UnitY * 15;
-                jetpackFuel -= 20;
+                //VMovement = Vector2.UnitY * 15;
+                //jetpackFuel -= 20;
+                HMovement += Vector2.UnitY * jetPackSpeed * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
                 flying = true;
             }
             else
@@ -215,7 +230,7 @@ namespace Ascension2
             }
             if (jetpackFuel < maxFuel && !newState.IsKeyDown(Keys.Space))
             {
-                jetpackFuel += 5;
+                jetpackFuel += 5 * (int)getGameTime(gameTime);
             }
         }
 

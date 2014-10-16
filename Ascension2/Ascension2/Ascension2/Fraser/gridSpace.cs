@@ -68,15 +68,15 @@ namespace Ascension2
         public gridSpace getChild(int xCoordinate, int yCoordinate)
         {
             if (level != 0) {
-                int multiplier = (int)Math.Pow(childrenNumber, level - 1);
-                int indexY = (yCoordinate - ((int)thisCoordinate.Y))/multiplier;
+                int multiplier = (int)Math.Pow(childrenNumber, level-1);
+                int indexY = (yCoordinate - (int)thisCoordinate.Y)/multiplier;
                 int indexX;
-                if (xCoordinate >= 0) {
-                    indexX = (xCoordinate - ((int)thisCoordinate.X))/multiplier;
+                if (xCoordinate >= 0){
+                    indexX = (xCoordinate - (int)thisCoordinate.X)/multiplier;
                 }
                 else
                 {
-                    indexX = (xCoordinate - (int)thisCoordinate.X )/ multiplier;
+                    indexX = (xCoordinate - (int)thisCoordinate.X)/multiplier;
                 }
                 return children[indexX, indexY].getChild(xCoordinate,yCoordinate);
             }

@@ -70,12 +70,10 @@ namespace Ascension2
                 createLine(currentX, startY, currentX, endY, texture, levelToFill);
                 if (currentX < endX)
                 {
-                    Console.WriteLine("There are " + currentX + " blocks");
                     currentX++;
                 }
                 else
                 {
-                    Console.WriteLine("There are " + currentX + " blocks");
                     currentX--;
                 }
             }
@@ -134,7 +132,7 @@ namespace Ascension2
 
         public void generateGround(Texture2D texture, Level levelToFill)
         {
-            createBlock(-1000, 0, 0, towerBaseHeight, texture, levelToFill);
+            createBlock(-1000, 0, 1000, towerBaseHeight, texture, levelToFill);
         }
     }
 }

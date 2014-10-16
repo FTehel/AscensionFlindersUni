@@ -78,6 +78,7 @@
     <Compile Include="Fraser\gridLine.cs" />
     <Compile Include="Fraser\gridSpace.cs" />
     <Compile Include="Fraser\Level.cs" />
+    <Compile Include="Fraser\PhysicsObject.cs" />
     <Compile Include="Fraser\proceduralGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

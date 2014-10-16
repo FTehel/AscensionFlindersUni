@@ -34,7 +34,7 @@ namespace Ascension2
             }
             else
             {
-                return -((xCoord+1) / sizeInGrids);
+                return -((xCoord + 1)/sizeInGrids);
             }
         }
 
