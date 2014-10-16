@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,8 @@ namespace Ascension2.Fraser
                 int thisMaxY = (int)position.Y + (int)size.Y;
                 int thisMinY = (int)position.Y;
 
+                Vector2 newPosition;
+
                 if (isBetweenValues(thisMaxX, otherMaxX, otherMinX) || isBetweenValues(thisMinX, otherMaxX, otherMinX))
                 {
                     if (isBetweenValues(thisMaxY, otherMaxY, otherMinY) || isBetweenValues(thisMinY, otherMaxY, otherMinY))
@@ -32,6 +35,10 @@ namespace Ascension2.Fraser
                     }
                 }
             }
+        }
+
+        public void getCollisionOnChild(){
+
         }
 
         public Boolean isBetweenValues(int x, int y, int z)
@@ -46,6 +53,18 @@ namespace Ascension2.Fraser
         public void onCollisionEnter()
         {
 
+        }
+
+        public void getCollisionEnter()
+        {
+            if (collided)
+            {
+                onCollisionEnter();
+            }
+        }
+
+        public void Update(GameTime gameTime, Level thisLevel){
+            getCollisionEnter();
         }
     }
 }
