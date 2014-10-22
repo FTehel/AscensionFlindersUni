@@ -215,7 +215,7 @@ namespace Ascension2
 
         public float getGameTime(GameTime gameTime)
         {
-            return (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
+            return (float)(gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public void jetpackMovement(GameTime gameTime)

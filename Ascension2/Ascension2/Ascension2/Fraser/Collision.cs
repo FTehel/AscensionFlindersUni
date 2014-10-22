@@ -11,6 +11,16 @@ namespace Ascension2.Fraser
         public Vector2 position;
         public GameObject other;
 
+        public sides side = sides.top; 
+
+        public enum sides
+        {
+            top,
+            bottom,
+            left,
+            right
+        };
+
         public Collision(Vector2 newPosition, GameObject otherObject)
         {
             this.position = newPosition;
