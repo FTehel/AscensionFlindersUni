@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Ascension2
 {
-    class Camera
+    public class Camera
     {
         public Vector2 position;
         Vector2 velocity;

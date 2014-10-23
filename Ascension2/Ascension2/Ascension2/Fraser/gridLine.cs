@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Ascension2
 {
-    class gridLine
+    public class gridLine
     {
         public gridSpace[] grids;
         public int level;

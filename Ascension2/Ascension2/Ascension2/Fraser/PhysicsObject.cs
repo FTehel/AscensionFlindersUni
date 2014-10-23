@@ -7,20 +7,24 @@ using Ascension2.Fraser;
 
 namespace Ascension2.Fraser
 {
-    class PhysicsObject : GameObject
+    public class PhysicsObject : GameObject
     {
 
         Boolean collided = false;
-        Collision[] currentCollisions = new Collision[0];
+        public Collision[] currentCollisions = new Collision[0];
         Boolean hasCollision = true;
         Vector2 velocity;
 
         public enum sides
         {
-            topLeft,
-            bottomLeft,
+            top,
+            bottom,
+            left,
+            right,
             topRight,
+            topLeft,
             bottomRight,
+            bottomLeft
         };
 
         /*public List<Collision> getCollision(Vector2 currentPos, Vector2 newPos, GameObject other, List<Collision> collisions)
@@ -83,7 +87,7 @@ namespace Ascension2.Fraser
 
         public List<Collision> getCollision(Vector2 currentPos, Vector2 newPos, GameObject other, List<Collision> collisions)
         {
-            if (other.hasCollision)
+            if (other != null && other.hasCollision)
             {
                 int otherMaxX = (int)other.position.X + (int)other.size.X;
                 int otherMinX = (int)other.position.X;
@@ -110,7 +114,7 @@ namespace Ascension2.Fraser
 
                 Vector2 newPosition;
 
-                sides newSides = sides.topRight;
+                sides newSides = sides.top;
 
                 int currentMaxX = (int)currentPos.X + (int)size.X;
                 int currentMinX = (int)currentPos.X;
@@ -122,7 +126,47 @@ namespace Ascension2.Fraser
 
                     if (isBetweenValues(thisMaxY, otherMaxY, otherMinY) || isBetweenValues(thisMinY, otherMaxY, otherMinY))
                     {
-                        
+                        if (currentMaxY < otherMinY)
+                        {
+                            if (currentMaxX < otherMinX)
+                            {
+                                newSides = sides.bottomLeft;
+                            }
+                            else if (currentMinX > otherMaxX)
+                            {
+                                newSides = sides.bottomRight;
+                            }
+                            else
+                            {
+                                newSides = sides.bottom;
+                            }
+                        }
+                        else if (currentMinY > otherMaxY)
+                        {
+                            if (currentMaxX < otherMinX)
+                            {
+                                newSides = sides.topLeft;
+                            }
+                            else if (currentMinX > otherMaxX)
+                            {
+                                newSides = sides.topRight;
+                            }
+                            else
+                            {
+                                newSides = sides.top;
+                            }
+                        }
+                        else
+                        {
+                            if (currentMaxX < otherMinX)
+                            {
+                                newSides = sides.left;
+                            }
+                            else
+                            {
+                                newSides = sides.right;
+                            }
+                        }
 
                         newPosition = getCollisionPosition(position, other.position);
                         if (other.GetType() == typeof(gridSpace))
@@ -134,12 +178,12 @@ namespace Ascension2.Fraser
                             }
                             else
                             {
-                                collisions.Add(new Collision(newPosition, other));
+                                collisions.Add(new Collision(newSides, newPosition, other));
                             }
                         }
                         else
                         {
-                            collisions.Add(new Collision(newPosition, other));
+                            collisions.Add(new Collision(newSides, newPosition, other));
                         }
                     }
                 }
@@ -232,10 +276,12 @@ namespace Ascension2.Fraser
             }
         }
 
-        public void updatePhysics(GameTime gameTime, Level thisLevel){
+        public Vector2 updatePhysics(GameTime gameTime, Level thisLevel, Vector2 currentVelocity){
+            velocity = currentVelocity;
             getCollisionForLevel(thisLevel, gameTime);
             getCollisionEnter();
             stopOnCollision();
+            return velocity;
         }
 
         public void stopOnCollision(){
@@ -250,11 +296,63 @@ namespace Ascension2.Fraser
 
         public Vector2 getCollisionVelocity(Collision collision)
         {
-            
+            GameObject other = collision.other;
             Vector2 centre = new Vector2(position.X + size.X / 2, position.Y + size.Y / 2);
             Vector2 otherCentre = new Vector2(other.position.X + other.size.X / 2, other.position.Y + other.size.Y / 2);
             Vector2 newVelocity = velocity;
-            
+            Vector2 counterVelocity = Vector2.Zero;
+            float dot = 0;
+            float speed = velocity.Length();
+            if (collision.side.Equals(sides.top))
+            {
+                counterVelocity.Y = 1;
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            else if (collision.side.Equals(sides.bottom))
+            {
+                counterVelocity.Y = -1;
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            else if (collision.side.Equals(sides.left))
+            {
+                counterVelocity.X = -1;
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            else if (collision.side.Equals(sides.right))
+            {
+                counterVelocity.X = 1;
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            else if (collision.side.Equals(sides.bottomLeft))
+            {
+                counterVelocity.Y = -1;
+                counterVelocity.X = -1;
+                counterVelocity.Normalize();
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            else if (collision.side.Equals(sides.bottomRight))
+            {
+                counterVelocity.Y = -1;
+                counterVelocity.X = 1;
+                counterVelocity.Normalize();
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            else if (collision.side.Equals(sides.topRight))
+            {
+                counterVelocity.Y = 1;
+                counterVelocity.X = 1;
+                counterVelocity.Normalize();
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            else if (collision.side.Equals(sides.topLeft))
+            {
+                counterVelocity.Y = 1;
+                counterVelocity.X = -1;
+                counterVelocity.Normalize();
+                dot = Vector2.Dot(-counterVelocity, velocity);
+            }
+            counterVelocity *= dot * speed;
+            newVelocity = velocity + counterVelocity;
 
             return newVelocity;
         }

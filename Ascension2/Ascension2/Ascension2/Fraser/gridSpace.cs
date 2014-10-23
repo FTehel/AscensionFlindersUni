@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Ascension2
 {
-    class gridSpace : GameObject
+    public class gridSpace : GameObject
     {
         public Vector2 thisCoordinate = new Vector2(0,0);
         public gridSpace[,] children;

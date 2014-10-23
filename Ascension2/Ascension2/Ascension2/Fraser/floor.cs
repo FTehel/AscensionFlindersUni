@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Ascension2
 {
-    class Floor
+    public class Floor
     {
         int height = 0;
         public int[] walls = new int[0];

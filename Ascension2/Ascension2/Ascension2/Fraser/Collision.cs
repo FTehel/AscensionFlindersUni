@@ -6,25 +6,18 @@ using System.Text;
 
 namespace Ascension2.Fraser
 {
-    class Collision
+    public class Collision
     {
         public Vector2 position;
         public GameObject other;
 
-        public sides side = sides.top; 
+        public PhysicsObject.sides side = PhysicsObject.sides.top;
 
-        public enum sides
-        {
-            top,
-            bottom,
-            left,
-            right
-        };
-
-        public Collision(Vector2 newPosition, GameObject otherObject)
+        public Collision(PhysicsObject.sides newSide, Vector2 newPosition, GameObject otherObject)
         {
             this.position = newPosition;
             this.other = otherObject;
+            this.side = newSide;
         }
     }
 }

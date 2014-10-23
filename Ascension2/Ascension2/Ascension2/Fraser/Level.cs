@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace Ascension2
 {
-    class Level
+    public class Level
     {
         public gridLine[] tilesXPositive;
         public gridLine[] tilesXNegative;

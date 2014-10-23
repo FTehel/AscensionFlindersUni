@@ -10,12 +10,16 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Ascension2.Fraser;
+using Ascension2;
 
 namespace Ascension2
 {
     public class Player : GameObject
     {
         Texture2D texture;
+
+        PhysicsObject physics = new PhysicsObject();
 
         //Used to keypress for jumping
         KeyboardState oldState;
@@ -79,6 +83,7 @@ namespace Ascension2
             oldState = Keyboard.GetState();
             spriteBatch = batch;
             jetpackFuel = maxFuel;
+            this.position = position;
         }
 
         public Rectangle getPlayerBounds
@@ -110,7 +115,7 @@ namespace Ascension2
             }
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Level thisLevel)
         {
             KeyboardState newState = Keyboard.GetState();
 
@@ -173,12 +178,13 @@ namespace Ascension2
             //HMovement -= HMovement * new Vector2(.1f, 0);
 
             //Updating Vertical and Horizontal position
+            HMovement = physics.updatePhysics(gameTime, thisLevel, HMovement);
             position += HMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
             VMovement = Vector2.Zero;
             position += VMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
 
             //Temporary measures to prevent character leaving screen and test item progression
-            if (position.Y < 2000)
+            /*if (position.Y < 2000)
             {
                 position = new Vector2(position.X, 2000);
             }
@@ -192,7 +198,7 @@ namespace Ascension2
             if (position.X > 500)
             {
                 position = new Vector2(500, position.Y);
-            }
+            }*/
             if (newState.IsKeyDown(Keys.U))
             {
                 unlockItem("Jetpack");

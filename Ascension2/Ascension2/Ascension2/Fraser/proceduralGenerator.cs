@@ -17,7 +17,7 @@ namespace Ascension2
         int towerWidth = 80;
         int floorHeight = 10;
         int towerStart = -80;
-        public int towerBaseHeight = 100;
+        public int towerBaseHeight = 10;
 
         Vector2 roomWidth = new Vector2(10, 30);
 

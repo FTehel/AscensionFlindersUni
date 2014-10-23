@@ -24,7 +24,7 @@ namespace Ascension2
         int screenWidth;
         int screenHeight;
 
-        Level thisLevel;
+        public Level thisLevel;
 
         Texture2D brickTexture;
 
@@ -95,7 +95,7 @@ namespace Ascension2
             generator.generateGround(brickTexture, thisLevel);
 
             playerTexture = Content.Load<Texture2D>("Simon/Player");
-            player = new Player(playerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height - 90), spriteBatch);
+            player = new Player(playerTexture, new Vector2(300, 400), spriteBatch);
 
             camera.parent = player;
             debugFont = Content.Load<SpriteFont>("Simon/DebugFont");
@@ -146,7 +146,7 @@ namespace Ascension2
                 gameObjects[i].Update(theGameTime);
             }
             camera.Update(theGameTime);
-            player.Update(theGameTime);
+            player.Update(theGameTime, thisLevel);
             generateLevel();
         }
 
