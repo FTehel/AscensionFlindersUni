@@ -18,9 +18,9 @@ namespace Ascension2
         public gridSpace[,] children;
         public int level;
         public int sizeInGrids;
-        public Vector2 size;
+       //public Vector2 size;
         public int childrenNumber;
-        public Vector2 position;
+        //public Vector2 position;
         public Texture2D texture;
         public gridSpace parent;
         public Boolean isFilled;
@@ -34,6 +34,7 @@ namespace Ascension2
             this.childrenNumber = thisChildrenNumber;
             this.parent = parent;
             this.thisCoordinate = newCoordinate;
+            this.hasCollision = true;
 
             this.setSizeInCoordinates();
 

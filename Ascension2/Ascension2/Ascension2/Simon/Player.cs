@@ -119,6 +119,8 @@ namespace Ascension2
         {
             KeyboardState newState = Keyboard.GetState();
 
+            physics.position = position;
+
             //Running
             if (newState.IsKeyDown(Keys.Left))
             {
@@ -178,6 +180,8 @@ namespace Ascension2
             //HMovement -= HMovement * new Vector2(.1f, 0);
 
             //Updating Vertical and Horizontal position
+            physics.position = position;
+            physics.size = size;
             HMovement = physics.updatePhysics(gameTime, thisLevel, HMovement);
             position += HMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
             VMovement = Vector2.Zero;

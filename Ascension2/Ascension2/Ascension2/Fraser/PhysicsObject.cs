@@ -87,103 +87,112 @@ namespace Ascension2.Fraser
 
         public List<Collision> getCollision(Vector2 currentPos, Vector2 newPos, GameObject other, List<Collision> collisions)
         {
-            if (other != null && other.hasCollision)
+            List<Collision> newCollisions = collisions;
+            if (other != null)
             {
-                int otherMaxX = (int)other.position.X + (int)other.size.X;
-                int otherMinX = (int)other.position.X;
-                int otherMaxY = (int)other.position.Y + (int)other.size.Y;
-                int otherMinY = (int)other.position.Y;
-
-                Vector2 corner1 = position;
-                Vector2 corner2 = position;
-                corner2.Y += size.Y;
-                Vector2 corner3 = position;
-                corner3 += size;
-                Vector2 corner4 = position;
-                corner4.X += size.X;
-
-                Vector2 corner1Projection = corner1 + velocity;
-                Vector2 corner2Projection = corner2 + velocity;
-                Vector2 corner3Projection = corner3 + velocity;
-                Vector2 corner4Projection = corner4 + velocity;
-
-                int thisMaxX = (int)newPos.X + (int)size.X;
-                int thisMinX = (int)newPos.X;
-                int thisMaxY = (int)newPos.Y + (int)size.Y;
-                int thisMinY = (int)newPos.Y;
-
-                Vector2 newPosition;
-
-                sides newSides = sides.top;
-
-                int currentMaxX = (int)currentPos.X + (int)size.X;
-                int currentMinX = (int)currentPos.X;
-                int currentMaxY = (int)currentPos.Y + (int)size.Y;
-                int currentMinY = (int)currentPos.Y;
-
-                if (isBetweenValues(thisMaxX, otherMaxX, otherMinX) || isBetweenValues(thisMinX, otherMaxX, otherMinX))
+                if (other.hasCollision)
                 {
+                    int otherMaxX = (int)other.position.X + (int)other.size.X;
+                    int otherMinX = (int)other.position.X;
+                    int otherMaxY = (int)other.position.Y + (int)other.size.Y;
+                    int otherMinY = (int)other.position.Y;
 
-                    if (isBetweenValues(thisMaxY, otherMaxY, otherMinY) || isBetweenValues(thisMinY, otherMaxY, otherMinY))
+
+
+                    Vector2 corner1 = position;
+                    Vector2 corner2 = position;
+                    corner2.Y += size.Y;
+                    Vector2 corner3 = position;
+                    corner3 += size;
+                    Vector2 corner4 = position;
+                    corner4.X += size.X;
+
+                    Vector2 corner1Projection = corner1 + velocity;
+                    Vector2 corner2Projection = corner2 + velocity;
+                    Vector2 corner3Projection = corner3 + velocity;
+                    Vector2 corner4Projection = corner4 + velocity;
+
+                    int thisMaxX = (int)newPos.X + (int)size.X;
+                    int thisMinX = (int)newPos.X;
+                    int thisMaxY = (int)newPos.Y + (int)size.Y;
+                    int thisMinY = (int)newPos.Y;
+
+                    Vector2 newPosition;
+
+                    sides newSides = sides.top;
+
+                    int currentMaxX = (int)currentPos.X + (int)size.X;
+                    int currentMinX = (int)currentPos.X;
+                    int currentMaxY = (int)currentPos.Y + (int)size.Y;
+                    int currentMinY = (int)currentPos.Y;
+
+
+                    if (isBetweenValues(thisMaxX, otherMaxX, otherMinX) || isBetweenValues(thisMinX, otherMaxX, otherMinX))
                     {
-                        if (currentMaxY < otherMinY)
+                        if (isBetweenValues(thisMaxY, otherMaxY, otherMinY) || isBetweenValues(thisMinY, otherMaxY, otherMinY))
                         {
-                            if (currentMaxX < otherMinX)
+                            if (currentMaxY < otherMinY)
                             {
-                                newSides = sides.bottomLeft;
+                                if (currentMaxX < otherMinX)
+                                {
+                                    newSides = sides.bottomLeft;
+                                }
+                                else if (currentMinX > otherMaxX)
+                                {
+                                    newSides = sides.bottomRight;
+                                }
+                                else
+                                {
+                                    newSides = sides.bottom;
+                                }
                             }
-                            else if (currentMinX > otherMaxX)
+                            else if (currentMinY > otherMaxY)
                             {
-                                newSides = sides.bottomRight;
+                                if (currentMaxX < otherMinX)
+                                {
+                                    newSides = sides.topLeft;
+                                }
+                                else if (currentMinX > otherMaxX)
+                                {
+                                    newSides = sides.topRight;
+                                }
+                                else
+                                {
+                                    newSides = sides.top;
+                                }
                             }
                             else
                             {
-                                newSides = sides.bottom;
+                                if (currentMaxX < otherMinX)
+                                {
+                                    newSides = sides.left;
+                                }
+                                else
+                                {
+                                    newSides = sides.right;
+                                }
                             }
-                        }
-                        else if (currentMinY > otherMaxY)
-                        {
-                            if (currentMaxX < otherMinX)
-                            {
-                                newSides = sides.topLeft;
-                            }
-                            else if (currentMinX > otherMaxX)
-                            {
-                                newSides = sides.topRight;
-                            }
-                            else
-                            {
-                                newSides = sides.top;
-                            }
-                        }
-                        else
-                        {
-                            if (currentMaxX < otherMinX)
-                            {
-                                newSides = sides.left;
-                            }
-                            else
-                            {
-                                newSides = sides.right;
-                            }
-                        }
 
-                        newPosition = getCollisionPosition(position, other.position);
-                        if (other.GetType() == typeof(gridSpace))
-                        {
-                            gridSpace grid = (gridSpace)other;
-                            if (grid.level != 0)
+                            newPosition = getCollisionPosition(position, other.position);
+                            if (other.GetType() == typeof(gridSpace))
                             {
-                                collisions = getCollisionOnChildren(currentPos, newPos, grid, collisions);
+                                gridSpace grid = (gridSpace)other;
+                                if (grid.level != 0)
+                                {
+                                    Console.WriteLine("Colliding with parent");
+                                    collisions = getCollisionOnChildren(currentPos, newPos, grid, collisions);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Colliding with child");
+                                    collisions.Add(new Collision(newSides, newPosition, other));
+                                }
                             }
                             else
                             {
+
                                 collisions.Add(new Collision(newSides, newPosition, other));
                             }
-                        }
-                        else
-                        {
-                            collisions.Add(new Collision(newSides, newPosition, other));
                         }
                     }
                 }
@@ -243,6 +252,7 @@ namespace Ascension2.Fraser
             Vector2 newPos = (velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) + position;
             Vector2 currentPos = position;
             List<Collision> collisions = new List<Collision>();
+            currentCollisions = new Collision[0];
             for (var i = 0; i < otherLevel.tilesXPositive.Length; i++)
             {
                 collisions = getCollisionForGridLine(currentPos, newPos, otherLevel.tilesXPositive[i], collisions);
@@ -256,7 +266,7 @@ namespace Ascension2.Fraser
 
         public Boolean isBetweenValues(int x, int y, int z)
         {
-            if (x > y && x < z)
+            if ((x > y && x < z) || (x > z && x < y))
             {
                 return true;
             }
@@ -288,6 +298,7 @@ namespace Ascension2.Fraser
             if(hasCollision){
                 if(currentCollisions.Length > 0){
                     for (int i = 0; i < currentCollisions.Length;i++){
+                        
                         velocity = getCollisionVelocity(currentCollisions[i]);
                     }
                 }
@@ -301,58 +312,72 @@ namespace Ascension2.Fraser
             Vector2 otherCentre = new Vector2(other.position.X + other.size.X / 2, other.position.Y + other.size.Y / 2);
             Vector2 newVelocity = velocity;
             Vector2 counterVelocity = Vector2.Zero;
+            Vector2 nVelocity = velocity;
+            nVelocity.Normalize();
             float dot = 0;
             float speed = velocity.Length();
             if (collision.side.Equals(sides.top))
             {
+                Console.WriteLine("top");
                 counterVelocity.Y = 1;
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
             else if (collision.side.Equals(sides.bottom))
             {
+                Console.WriteLine("bottom");
                 counterVelocity.Y = -1;
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
             else if (collision.side.Equals(sides.left))
             {
+                Console.WriteLine("left");
                 counterVelocity.X = -1;
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
             else if (collision.side.Equals(sides.right))
             {
+                Console.WriteLine("right");
                 counterVelocity.X = 1;
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
             else if (collision.side.Equals(sides.bottomLeft))
             {
+                Console.WriteLine("bottomLeft");
                 counterVelocity.Y = -1;
                 counterVelocity.X = -1;
                 counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
             else if (collision.side.Equals(sides.bottomRight))
             {
+                Console.WriteLine("bottomRight");
                 counterVelocity.Y = -1;
                 counterVelocity.X = 1;
                 counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
             else if (collision.side.Equals(sides.topRight))
             {
+                Console.WriteLine("topRight");
                 counterVelocity.Y = 1;
                 counterVelocity.X = 1;
                 counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
             else if (collision.side.Equals(sides.topLeft))
             {
+                Console.WriteLine("topLeft");
                 counterVelocity.Y = 1;
                 counterVelocity.X = -1;
                 counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, velocity);
+                dot = Vector2.Dot(-counterVelocity, nVelocity);
             }
-            counterVelocity *= dot * speed;
-            newVelocity = velocity + counterVelocity;
+            if (dot > 0)
+            {
+                counterVelocity *= dot * speed;
+                newVelocity = velocity + counterVelocity;
+            }
+           
 
             return newVelocity;
         }
