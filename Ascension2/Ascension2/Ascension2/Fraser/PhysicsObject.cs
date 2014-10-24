@@ -85,7 +85,7 @@ namespace Ascension2.Fraser
             return collisions;
         }*/
 
-        public List<Collision> getCollision(Vector2 currentPos, Vector2 newPos, GameObject other, List<Collision> collisions)
+        public List<Collision> getCollision(Vector2 currentPos, Vector2 newPos, GameObject other, List<Collision> collisions, Vector2 newVelocity)
         {
             List<Collision> newCollisions = collisions;
             if (other != null)
@@ -107,10 +107,10 @@ namespace Ascension2.Fraser
                     Vector2 corner4 = position;
                     corner4.X += size.X;
 
-                    Vector2 corner1Projection = corner1 + velocity;
-                    Vector2 corner2Projection = corner2 + velocity;
-                    Vector2 corner3Projection = corner3 + velocity;
-                    Vector2 corner4Projection = corner4 + velocity;
+                    Vector2 corner1Projection = corner1 + newVelocity;
+                    Vector2 corner2Projection = corner2 + newVelocity;
+                    Vector2 corner3Projection = corner3 + newVelocity;
+                    Vector2 corner4Projection = corner4 + newVelocity;
 
                     int thisMaxX = (int)newPos.X + (int)size.X;
                     int thisMinX = (int)newPos.X;
@@ -126,52 +126,46 @@ namespace Ascension2.Fraser
                     int currentMaxY = (int)currentPos.Y + (int)size.Y;
                     int currentMinY = (int)currentPos.Y;
 
+                    List<CollisionPoint> collisionsA = getCollisionPointOnRectangle(corner1, corner1Projection, other);
+                    List<CollisionPoint> collisionsB = getCollisionPointOnRectangle(corner2, corner2Projection, other);
+                    List<CollisionPoint> collisionsC = getCollisionPointOnRectangle(corner3, corner3Projection, other);
+                    List<CollisionPoint> collisionsD = getCollisionPointOnRectangle(corner4, corner4Projection, other);
+
+                    collisionsA.AddRange(collisionsB);
+                    collisionsA.AddRange(collisionsC);
+                    collisionsA.AddRange(collisionsD);
+
+                    if (collisionsA.Count > 0)
+                    {
+                        CollisionPoint[] points = collisionsA.ToArray();
+                        if (other.GetType() == typeof(gridSpace))
+                        {
+                            gridSpace grid = (gridSpace)other;
+                            if (grid.level != 0)
+                            {
+                                collisions = getCollisionOnChildren(currentPos, newPos, grid, collisions, newVelocity);
+                            }
+                            else
+                            {
+                                
+                                for(var i = 0;i < points.Length;i++){
+                                    collisions.Add(new Collision(other, points[i]));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (var i = 0; i < points.Length; i++)
+                            {
+                                collisions.Add(new Collision(other, points[i]));
+                            }
+                        }
+                    }
 
                     if (isBetweenValues(thisMaxX, otherMaxX, otherMinX) || isBetweenValues(thisMinX, otherMaxX, otherMinX))
                     {
                         if (isBetweenValues(thisMaxY, otherMaxY, otherMinY) || isBetweenValues(thisMinY, otherMaxY, otherMinY))
                         {
-                            if (currentMaxY < otherMinY)
-                            {
-                                if (currentMaxX < otherMinX)
-                                {
-                                    newSides = sides.bottomLeft;
-                                }
-                                else if (currentMinX > otherMaxX)
-                                {
-                                    newSides = sides.bottomRight;
-                                }
-                                else
-                                {
-                                    newSides = sides.bottom;
-                                }
-                            }
-                            else if (currentMinY > otherMaxY)
-                            {
-                                if (currentMaxX < otherMinX)
-                                {
-                                    newSides = sides.topLeft;
-                                }
-                                else if (currentMinX > otherMaxX)
-                                {
-                                    newSides = sides.topRight;
-                                }
-                                else
-                                {
-                                    newSides = sides.top;
-                                }
-                            }
-                            else
-                            {
-                                if (currentMaxX < otherMinX)
-                                {
-                                    newSides = sides.left;
-                                }
-                                else
-                                {
-                                    newSides = sides.right;
-                                }
-                            }
 
                             newPosition = getCollisionPosition(position, other.position);
                             if (other.GetType() == typeof(gridSpace))
@@ -179,19 +173,8 @@ namespace Ascension2.Fraser
                                 gridSpace grid = (gridSpace)other;
                                 if (grid.level != 0)
                                 {
-                                    Console.WriteLine("Colliding with parent");
-                                    collisions = getCollisionOnChildren(currentPos, newPos, grid, collisions);
+                                    collisions = getCollisionOnChildren(currentPos, newPos, grid, collisions, newVelocity);
                                 }
-                                else
-                                {
-                                    Console.WriteLine("Colliding with child");
-                                    collisions.Add(new Collision(newSides, newPosition, other));
-                                }
-                            }
-                            else
-                            {
-
-                                collisions.Add(new Collision(newSides, newPosition, other));
                             }
                         }
                     }
@@ -230,36 +213,37 @@ namespace Ascension2.Fraser
             currentCollisions = temp;
         }
 
-        public List<Collision> getCollisionOnChildren(Vector2 currentPos, Vector2 newPos, gridSpace thisSpace, List<Collision> collisions){
+        public List<Collision> getCollisionOnChildren(Vector2 currentPos, Vector2 newPos, gridSpace thisSpace, List<Collision> collisions, Vector2 newVelocity){
             for(int i = 0;i < thisSpace.children.GetLength(0);i ++){
                 for (int j = 0; j < thisSpace.children.GetLength(1); j++)
                 {
-                    collisions = getCollision(currentPos, newPos, thisSpace.children[i,j], collisions);
+                    collisions = getCollision(currentPos, newPos, thisSpace.children[i,j], collisions, newVelocity);
                 }
             }
             return collisions;
         }
 
-        public List<Collision> getCollisionForGridLine(Vector2 currentPos, Vector2 newPos, gridLine line, List<Collision> collisions){
+        public List<Collision> getCollisionForGridLine(Vector2 currentPos, Vector2 newPos, gridLine line, List<Collision> collisions, Vector2 newVelocity){
             for (var i = 0; i < line.grids.Length; i++)
             {
-                collisions = getCollision(currentPos, newPos, line.grids[i], collisions);
+                collisions = getCollision(currentPos, newPos, line.grids[i], collisions, newVelocity);
             }
             return collisions;
         }
 
         public void getCollisionForLevel(Level otherLevel, GameTime gameTime){
             Vector2 newPos = (velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) + position;
+            Vector2 newVelocity = velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 currentPos = position;
             List<Collision> collisions = new List<Collision>();
             currentCollisions = new Collision[0];
             for (var i = 0; i < otherLevel.tilesXPositive.Length; i++)
             {
-                collisions = getCollisionForGridLine(currentPos, newPos, otherLevel.tilesXPositive[i], collisions);
+                collisions = getCollisionForGridLine(currentPos, newPos, otherLevel.tilesXPositive[i], collisions, newVelocity);
             }
             for (var i = 0; i < otherLevel.tilesXNegative.Length; i++)
             {
-                collisions = getCollisionForGridLine(currentPos, newPos, otherLevel.tilesXNegative[i], collisions);
+                collisions = getCollisionForGridLine(currentPos, newPos, otherLevel.tilesXNegative[i], collisions, newVelocity);
             }
             currentCollisions = collisions.ToArray();
         }
@@ -288,98 +272,138 @@ namespace Ascension2.Fraser
 
         public Vector2 updatePhysics(GameTime gameTime, Level thisLevel, Vector2 currentVelocity){
             velocity = currentVelocity;
-            getCollisionForLevel(thisLevel, gameTime);
+            //getCollisionForLevel(thisLevel, gameTime);
             getCollisionEnter();
-            stopOnCollision();
+            stopOnCollision(gameTime);
             return velocity;
         }
 
-        public void stopOnCollision(){
+        public void stopOnCollision(GameTime gameTime)
+        {
             if(hasCollision){
-                if(currentCollisions.Length > 0){
-                    for (int i = 0; i < currentCollisions.Length;i++){
-                        
-                        velocity = getCollisionVelocity(currentCollisions[i]);
-                    }
+                if(currentCollisions.Length > 0){                        
+                    velocity = getCollisionVelocity(currentCollisions, gameTime);
                 }
             }
         }
 
-        public Vector2 getCollisionVelocity(Collision collision)
+        public Vector2 getCollisionVelocity(Collision[] collisions, GameTime time)
         {
-            GameObject other = collision.other;
-            Vector2 centre = new Vector2(position.X + size.X / 2, position.Y + size.Y / 2);
-            Vector2 otherCentre = new Vector2(other.position.X + other.size.X / 2, other.position.Y + other.size.Y / 2);
             Vector2 newVelocity = velocity;
-            Vector2 counterVelocity = Vector2.Zero;
             Vector2 nVelocity = velocity;
             nVelocity.Normalize();
             float dot = 0;
-            float speed = velocity.Length();
-            if (collision.side.Equals(sides.top))
-            {
-                Console.WriteLine("top");
-                counterVelocity.Y = 1;
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            else if (collision.side.Equals(sides.bottom))
-            {
-                Console.WriteLine("bottom");
-                counterVelocity.Y = -1;
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            else if (collision.side.Equals(sides.left))
-            {
-                Console.WriteLine("left");
-                counterVelocity.X = -1;
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            else if (collision.side.Equals(sides.right))
-            {
-                Console.WriteLine("right");
-                counterVelocity.X = 1;
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            else if (collision.side.Equals(sides.bottomLeft))
-            {
-                Console.WriteLine("bottomLeft");
-                counterVelocity.Y = -1;
-                counterVelocity.X = -1;
-                counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            else if (collision.side.Equals(sides.bottomRight))
-            {
-                Console.WriteLine("bottomRight");
-                counterVelocity.Y = -1;
-                counterVelocity.X = 1;
-                counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            else if (collision.side.Equals(sides.topRight))
-            {
-                Console.WriteLine("topRight");
-                counterVelocity.Y = 1;
-                counterVelocity.X = 1;
-                counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            else if (collision.side.Equals(sides.topLeft))
-            {
-                Console.WriteLine("topLeft");
-                counterVelocity.Y = 1;
-                counterVelocity.X = -1;
-                counterVelocity.Normalize();
-                dot = Vector2.Dot(-counterVelocity, nVelocity);
-            }
-            if (dot > 0)
-            {
-                counterVelocity *= dot * speed;
-                newVelocity = velocity + counterVelocity;
-            }
-           
+            float speed = velocity.Length() * time.TotalGameTime.Seconds;
 
+            Collision shortest = getShortestCollision(collisions);
+            Vector2 side = shortest.point.otherSide;
+            Vector2 collisionOverlap = (velocity * time.TotalGameTime.Seconds) - shortest.point.collision;
+            float collisionOverlapLength = collisionOverlap.Length();
+            side.Normalize();
+            Vector2 sideVelocity = Vector2.Zero;
+            dot = Vector2.Dot(side, nVelocity);
+            if (dot >= 0)
+            {
+                sideVelocity = side;
+            }
+            else
+            {
+                dot = -dot;
+                sideVelocity = -side;
+            }
+            newVelocity = (shortest.point.collision - shortest.point.origin) + (sideVelocity * dot * collisionOverlapLength);
+            newVelocity /= time.TotalGameTime.Seconds;
             return newVelocity;
+        }
+
+        public Collision getShortestCollision(Collision[] collisions){
+            float shortestDistance = 0;
+            int shortestIndex = -1;
+            for (int i = 0; i < collisions.Length; i++)
+            {
+                if (shortestIndex == -1 || shortestDistance > collisions[i].point.length)
+                {
+                    shortestDistance = collisions[i].point.length;
+                    shortestIndex = i;
+                }
+            }
+            if (shortestIndex != -1)
+            {
+                return collisions[shortestIndex];
+            }
+            return null;
+        }
+
+        public Vector2 getCollisionPoint(Vector2 originA, Vector2 destinationA, Vector2 originB, Vector2 destinationB){
+
+            float percentA = getCollisionPercent(originA, destinationA, originB, destinationB);
+            float percentB = getCollisionPercent(originB, destinationB, originA, destinationA);
+
+            if (percentA != 0 && percentB != 0)
+            {
+                Vector2 pointVector = originA + (percentA * (destinationA - originA));
+                return pointVector;
+            }
+            Vector2 returnVector = Vector2.Zero;
+            return returnVector;
+        }
+
+        public Boolean doesCollide(Vector2 originA, Vector2 destinationA, Vector2 originB, Vector2 destinationB){
+
+            float percentA = getCollisionPercent(originA, destinationA, originB, destinationB);
+            float percentB = getCollisionPercent(originB, destinationB, originA, destinationA);
+
+            if (percentA != 0 && percentB != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public float getCollisionPercent(Vector2 originA, Vector2 destinationA, Vector2 originB, Vector2 destinationB)
+        {
+            float collisionPointPercentA = ((destinationB.X - originB.X) * (originA.Y - originB.Y)) - ((destinationB.Y - originB.Y) * (originA.X - originB.X));
+            float collisionPointPercentB = ((destinationB.Y - originB.Y) * (destinationA.X - originA.X)) - ((destinationB.X - originB.X) * (destinationA.Y - originA.Y));
+            float collisionPointPercent = collisionPointPercentA / collisionPointPercentB;
+
+            return collisionPointPercent;
+        }
+
+        public List<CollisionPoint> getCollisionPointOnRectangle(Vector2 originA, Vector2 destinationA, GameObject other){
+            List<CollisionPoint> returnList = new List<CollisionPoint>();
+            Vector2 corner1 = other.position;
+            Vector2 corner2 = other.position;
+            corner2.X += other.size.X;
+            Vector2 corner3 = other.position + other.size;
+            Vector2 corner4 = other.position;
+            corner4.Y += other.size.Y;
+
+            if (doesCollide(originA, destinationA, corner1, corner2))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner1, corner2);
+                CollisionPoint newPoint = new CollisionPoint(originA, point, corner1, corner2);
+                returnList.Add(newPoint);
+            }
+            if (doesCollide(originA, destinationA, corner2, corner3))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner2, corner3);
+                CollisionPoint newPoint = new CollisionPoint(originA, point, corner3, corner3);
+                returnList.Add(newPoint);
+            }
+            if (doesCollide(originA, destinationA, corner3, corner4))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner3, corner4);
+                CollisionPoint newPoint = new CollisionPoint(originA, point, corner3, corner4);
+                returnList.Add(newPoint);
+            }
+            if (doesCollide(originA, destinationA, corner4, corner1))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner4, corner1);
+                CollisionPoint newPoint = new CollisionPoint(originA, point, corner4, corner1);
+                returnList.Add(newPoint);
+            }
+
+            return returnList;
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Ascension2.Fraser
     {
         public Vector2 position;
         public GameObject other;
+        public CollisionPoint point;
+
 
         public PhysicsObject.sides side = PhysicsObject.sides.top;
 
@@ -18,6 +20,12 @@ namespace Ascension2.Fraser
             this.position = newPosition;
             this.other = otherObject;
             this.side = newSide;
+        }
+
+        public Collision(GameObject otherObject, CollisionPoint otherPoint)
+        {
+            this.other = otherObject;
+            this.point = otherPoint;
         }
     }
 }
