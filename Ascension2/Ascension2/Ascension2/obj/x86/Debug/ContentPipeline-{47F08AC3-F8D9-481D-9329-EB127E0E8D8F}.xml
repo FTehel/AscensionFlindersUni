@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\bricksTexture.xnb</Output>
-      <Time>2014-10-13T11:38:18.8406835+10:30</Time>
+      <Output>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\bricksTexture.xnb</Output>
+      <Time>2014-10-13T23:06:17.0710679+10:30</Time>
     </Item>
     <Item>
       <Source>Simon\Player.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\Player.xnb</Output>
-      <Time>2014-10-13T11:48:50.4532108+10:30</Time>
+      <Output>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\Player.xnb</Output>
+      <Time>2014-10-13T23:06:17.074006+10:30</Time>
     </Item>
     <Item>
       <Source>Simon\DebugFont.spritefont</Source>
@@ -25,8 +25,26 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\DebugFont.xnb</Output>
-      <Time>2014-10-13T11:49:14.1891114+10:30</Time>
+      <Output>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\DebugFont.xnb</Output>
+      <Time>2014-10-13T23:06:17.0730683+10:30</Time>
+    </Item>
+    <Item>
+      <Source>Simon\jet.wav</Source>
+      <Name>Simon\jet</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\jet.xnb</Output>
+      <Time>2014-10-25T21:47:44.0564212+10:30</Time>
+    </Item>
+    <Item>
+      <Source>Simon\jump.wav</Source>
+      <Name>Simon\jump</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\jump.xnb</Output>
+      <Time>2014-10-25T21:48:13.1740554+10:30</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -35,39 +53,39 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2Content\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
-        <Value>2011-09-01T15:22:30+09:30</Value>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2011-09-01T16:22:30+09:30</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
-        <Value>2011-09-01T15:22:30+09:30</Value>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2011-09-01T16:22:30+09:30</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
-        <Value>2011-09-01T15:22:30+09:30</Value>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2011-09-01T16:22:30+09:30</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
-        <Value>2011-09-01T15:22:30+09:30</Value>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2011-09-01T16:22:30+09:30</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
-        <Value>2011-09-01T15:22:30+09:30</Value>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2011-09-01T16:22:30+09:30</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
-        <Value>2011-09-01T15:22:30+09:30</Value>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2011-09-01T16:22:30+09:30</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2014-10-07T16:43:32.9917274+10:30</Value>
+        <Value>2014-08-05T21:52:47.9154531+09:30</Value>
       </Assembly>
     </Assemblies>
   </Asset>

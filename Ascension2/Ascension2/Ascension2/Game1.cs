@@ -34,7 +34,6 @@ namespace Ascension2
 
         GameObject[] gameObjects = new GameObject[0];
 
-
         Texture2D playerTexture;
         Player player;
 
@@ -56,7 +55,7 @@ namespace Ascension2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            SoundEffect.MasterVolume = 0.2f;
             base.Initialize();
         }
 
@@ -95,7 +94,7 @@ namespace Ascension2
             generator.generateGround(brickTexture, thisLevel);
 
             playerTexture = Content.Load<Texture2D>("Simon/Player");
-            player = new Player(playerTexture, new Vector2(300, 400), spriteBatch);
+            player = new Player(playerTexture, new Vector2(300, 400), spriteBatch, Content);
 
             camera.parent = player;
             debugFont = Content.Load<SpriteFont>("Simon/DebugFont");

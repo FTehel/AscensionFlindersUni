@@ -17,6 +17,10 @@ namespace Ascension2
 {
     public class Player : GameObject
     {
+        ContentManager content;
+        SoundEffect jumpSound;
+        SoundEffect jetSound;
+
         Texture2D texture;
 
         PhysicsObject physics = new PhysicsObject();
@@ -77,13 +81,17 @@ namespace Ascension2
         }
         ///////////////////////////
 
-        public Player(Texture2D texture, Vector2 position, SpriteBatch batch)
+        public Player(Texture2D texture, Vector2 position, SpriteBatch batch, ContentManager content)
         {
             this.texture = texture;
+            this.content = content;
             oldState = Keyboard.GetState();
             spriteBatch = batch;
             jetpackFuel = maxFuel;
             this.position = position;
+
+            jumpSound = content.Load<SoundEffect>("Simon/jump");
+            jetSound = content.Load<SoundEffect>("Simon/jet");
         }
 
         public Rectangle getPlayerBounds
@@ -140,10 +148,11 @@ namespace Ascension2
             }
 
             //Jumping (    NEED COLLISION DETECTION FOR FLOOR - isOnGround()    )
-            if (newState.IsKeyDown(Keys.Up) && position.Y == 2000)
+            if (newState.IsKeyDown(Keys.Up))
             {
                 if (!oldState.IsKeyDown(Keys.Up))
                 {
+                    jumpSound.Play();
                     VMovement = Vector2.Zero;
                     VMovement = Vector2.UnitY * 30;
                     HMovement += Vector2.UnitY * jumpForce * getGameTime(gameTime);
@@ -234,6 +243,7 @@ namespace Ascension2
 
             if (newState.IsKeyDown(Keys.Space))
             {
+                jetSound.Play();
                 //VMovement = Vector2.UnitY * 15;
                 //jetpackFuel -= 20;
                 HMovement += Vector2.UnitY * jetPackSpeed * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
