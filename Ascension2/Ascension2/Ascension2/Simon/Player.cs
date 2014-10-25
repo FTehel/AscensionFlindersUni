@@ -19,6 +19,7 @@ namespace Ascension2
     {
         ContentManager content;
         SoundEffect jumpSound;
+        SoundEffectInstance jet;
         SoundEffect jetSound;
 
         Texture2D texture;
@@ -92,6 +93,9 @@ namespace Ascension2
 
             jumpSound = content.Load<SoundEffect>("Simon/jump");
             jetSound = content.Load<SoundEffect>("Simon/jet");
+
+            jet = jetSound.CreateInstance();
+            jet.IsLooped = true;
         }
 
         public Rectangle getPlayerBounds
@@ -240,10 +244,12 @@ namespace Ascension2
         public void jetpackMovement(GameTime gameTime)
         {
             KeyboardState newState = Keyboard.GetState();
-
+            
             if (newState.IsKeyDown(Keys.Space))
             {
-                jetSound.Play();
+                
+                jet.Play(); 
+               
                 //VMovement = Vector2.UnitY * 15;
                 //jetpackFuel -= 20;
                 HMovement += Vector2.UnitY * jetPackSpeed * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
@@ -251,6 +257,7 @@ namespace Ascension2
             }
             else
             {
+                jet.Stop();
                 flying = false;
             }
             if (jetpackFuel < maxFuel && !newState.IsKeyDown(Keys.Space))
