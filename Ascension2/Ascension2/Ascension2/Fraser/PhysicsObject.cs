@@ -350,9 +350,32 @@ namespace Ascension2.Fraser
 
             newVelocity *= deltaTime;
 
+            Boolean down = true;
+            Boolean up = true;
+            Boolean left = true;
+            Boolean right = true;
+
             CollisionPoint[] points = new CollisionPoint[0];
             for (int i = 0; i < currentCollisions.Length; i++)
             {
+                Vector2 otherPos = currentCollisions[i].other.position;
+                Vector2 otherSize = currentCollisions[i].other.size;
+                if (otherPos.X == position.X + size.X)
+                {
+                    right = false;
+                }
+                if (otherPos.X + otherSize.X == position.X)
+                {
+                    left = false;
+                }
+                if (otherPos.Y == position.Y + size.Y)
+                {
+                    up = false;
+                }
+                if (otherPos.Y + otherSize.Y == position.Y)
+                {
+                    down = false;
+                }
                 points = getCollisionPoints(position, currentCollisions[i].other, points, newVelocity);
             }
 
@@ -381,6 +404,22 @@ namespace Ascension2.Fraser
                     }
                     newVelocity = (shortest.collision - shortest.origin) + (sideVelocity * dot * collisionOverlapLength);
                     newVelocity /= deltaTime;
+                }
+                if (!left && newVelocity.X < 0)
+                {
+                    newVelocity.X = 0;
+                }
+                if (!right && newVelocity.X > 0)
+                {
+                    newVelocity.X = 0;
+                }
+                if (!up && newVelocity.Y > 0)
+                {
+                    newVelocity.Y = 0;
+                }
+                if (!down && newVelocity.Y < 0)
+                {
+                    newVelocity.Y = 0;
                 }
             return newVelocity;
         }
@@ -428,7 +467,7 @@ namespace Ascension2.Fraser
             float percentA = getCollisionPercent(originA, destinationA, originB, destinationB);
             float percentB = getCollisionPercent(originB, destinationB, originA, destinationA);
 
-            if (percentA != 0 && percentB != 0)
+            if (percentA >= 0 && percentA <= 1 && percentB >= 0 && percentB <= 1)
             {
 
                 Vector2 pointVector = originA + (percentA * (destinationA - originA));
@@ -443,7 +482,7 @@ namespace Ascension2.Fraser
             float percentA = getCollisionPercent(originA, destinationA, originB, destinationB);
             float percentB = getCollisionPercent(originB, destinationB, originA, destinationA);
 
-            if (percentA != 0 && percentB != 0)
+            if (percentA >= 0 && percentA <= 1 && percentB >= 0 && percentB <= 1)
             {
                 return true;
             }

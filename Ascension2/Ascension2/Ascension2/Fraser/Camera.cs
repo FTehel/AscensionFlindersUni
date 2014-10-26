@@ -15,12 +15,12 @@ namespace Ascension2
         float speed = 10000;
         public GameObject parent;
 
-        public Vector2 worldToScreen(Vector2 other, int width, int height)
+        public Vector2 worldToScreen(Vector2 other, Vector2 size, int width, int height)
         {
             Vector2 offset = other - position;
             Vector2 centre = new Vector2(width / 2, height / 2);
             offset.Y *= -1;
-            return centre + offset;
+            return centre + offset - size;
         }
 
         public void Update(GameTime theGameTime)

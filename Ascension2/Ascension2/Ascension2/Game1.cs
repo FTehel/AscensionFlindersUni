@@ -124,8 +124,8 @@ namespace Ascension2
             generator.generateGround(brickTexture, thisLevel);
 
             playerTexture = Content.Load<Texture2D>("Simon/Player");
-<<<<<<< HEAD
-            player = new Player(playerTexture, new Vector2(1, 100), spriteBatch);
+            player = new Player(playerTexture, new Vector2(300, 400), spriteBatch, Content);
+
             player.size = new Vector2(40,90);
             player.screenWidth = screenWidth;
             player.screenHeight = screenHeight;
@@ -134,9 +134,6 @@ namespace Ascension2
             Console.WriteLine("camera " + screenHeight + " " + screenWidth);
 
             
-=======
-            player = new Player(playerTexture, new Vector2(300, 400), spriteBatch, Content);
->>>>>>> origin/master
 
             camera.parent = player;
             debugFont = Content.Load<SpriteFont>("Simon/DebugFont");
@@ -230,7 +227,7 @@ namespace Ascension2
                     string debugInfo2 = string.Format("Location: {0:0.0}", player.getPlayerBounds);
                     string debugInfo3 = string.Format("X Velocity: {0:0}, Y Velocity: {1:0}", player.GetHorizontalVelocity, player.GetVerticalVelocity);
 
-                    player.Draw(gameTime, camera.worldToScreen(player.position, screenWidth, screenHeight));
+                    player.Draw(gameTime, camera.worldToScreen(player.position, player.size, screenWidth, screenHeight));
                     fuel.Draw(spriteBatch);
                     if (enableDebug)
                         {
@@ -260,7 +257,7 @@ namespace Ascension2
                 {
                     if (grid.level == 0)
                     {
-                        Vector2 screenPos = camera.worldToScreen(grid.position, screenWidth, screenHeight);
+                        Vector2 screenPos = camera.worldToScreen(grid.position, grid.size, screenWidth, screenHeight);
                         Rectangle drawRect = new Rectangle((int)screenPos.X, (int)screenPos.Y, (int)grid.size.X, (int)grid.size.Y);
                         spriteBatch.Draw(grid.texture, drawRect, Color.White);
                     }

@@ -103,6 +103,21 @@ namespace Ascension2
             jet.IsLooped = true;
         }
 
+        public Player(Texture2D texture, Vector2 position, SpriteBatch batch)
+        {
+            this.texture = texture;
+            oldState = Keyboard.GetState();
+            spriteBatch = batch;
+            jetpackFuel = maxFuel;
+            this.position = position;
+
+            //jumpSound = content.Load<SoundEffect>("Simon/jump");
+            //jetSound = content.Load<SoundEffect>("Simon/jet");
+
+            //jet = jetSound.CreateInstance();
+            //jet.IsLooped = true;
+        }
+
         public Rectangle getPlayerBounds
         {
             get
@@ -127,8 +142,11 @@ namespace Ascension2
             startingFrame += (int)(time * framesPerSecond) % frameCount;
             if (texture != null)
             {
-                spriteBatch.Draw(texture, camera.worldToScreen(position, screenWidth, screenHeight), new Rectangle(startingFrame * (int)size.X, playerEvolution * (int)size.Y, (int)size.X, (int)size.Y), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
-                Console.WriteLine("Player " + camera.worldToScreen(position, screenWidth, screenHeight) + " " + camera.worldToScreen(camera.position, screenWidth, screenHeight));
+                spriteBatch.Draw(texture, camera.worldToScreen(position, size, screenWidth, screenHeight), new Rectangle(startingFrame * (int)size.X, playerEvolution * (int)size.Y, (int)size.X, (int)size.Y), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
+               /* Vector2 screenPos = camera.worldToScreen(position, size, screenWidth, screenHeight);
+                Rectangle drawRect = new Rectangle((int)screenPos.X, (int)screenPos.Y, (int)size.X, (int)size.Y);
+                spriteBatch.Draw(texture, drawRect, Color.White);*/
+                //Console.WriteLine("Player " + camera.worldToScreen(position, screenWidth, screenHeight) + " " + camera.worldToScreen(camera.position, screenWidth, screenHeight));
             }
         }
 
