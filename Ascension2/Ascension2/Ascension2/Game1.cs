@@ -95,7 +95,15 @@ namespace Ascension2
             generator.generateGround(brickTexture, thisLevel);
 
             playerTexture = Content.Load<Texture2D>("Simon/Player");
-            player = new Player(playerTexture, new Vector2(300, 400), spriteBatch);
+            player = new Player(playerTexture, new Vector2(1, 100), spriteBatch);
+            player.size = new Vector2(40,90);
+            player.screenWidth = screenWidth;
+            player.screenHeight = screenHeight;
+            player.camera = camera;
+
+            Console.WriteLine("camera " + screenHeight + " " + screenWidth);
+
+            
 
             camera.parent = player;
             debugFont = Content.Load<SpriteFont>("Simon/DebugFont");

@@ -14,10 +14,12 @@ namespace Ascension2
 
     class proceduralGenerator
     {
-        int towerWidth = 80;
+        int towerWidth = 100;
         int floorHeight = 10;
-        int towerStart = -80;
-        public int towerBaseHeight = 10;
+        int towerStart = 50;
+        public int towerBaseHeight = 1;
+
+        int groundWidth = 100;
 
         Vector2 roomWidth = new Vector2(10, 30);
 
@@ -132,7 +134,7 @@ namespace Ascension2
 
         public void generateGround(Texture2D texture, Level levelToFill)
         {
-            createBlock(-1000, 0, 1000, towerBaseHeight, texture, levelToFill);
+            createBlock(0, 0, groundWidth, towerBaseHeight, texture, levelToFill);
         }
     }
 }

@@ -23,7 +23,8 @@ namespace Ascension2
         //public Vector2 position;
         public Texture2D texture;
         public gridSpace parent;
-        public Boolean isFilled;
+        public Boolean isFilled = false;
+        public Boolean hasChildren = false;
 
         public gridSpace(int newLevel, Vector2 newSize, Vector2 newPosition, Vector2 newCoordinate, int thisChildrenNumber, gridSpace parent){
             
@@ -37,8 +38,9 @@ namespace Ascension2
             this.hasCollision = true;
 
             this.setSizeInCoordinates();
+            this.children = new gridSpace[thisChildrenNumber, thisChildrenNumber];
 
-            if (newLevel != 0)
+            /*if (newLevel != 0)
             {
                 this.children = new gridSpace[thisChildrenNumber, thisChildrenNumber];
                 float childSize = this.size.X / thisChildrenNumber;
@@ -59,10 +61,28 @@ namespace Ascension2
                     childPos.Y += childSize;
                     childPos.X = position.X;
                 }
-            }
-            else
+            }*/
+        }
+
+        public void createChildren(){
+            hasChildren = true;
+            float childSize = this.size.X / childrenNumber;
+            var childLevel = level - 1;
+            Vector2 childPos = position;
+
+            int xCoordinate = (int)Math.Pow((double)childrenNumber, (double)childLevel);
+            int yCoordinate = (int)Math.Pow((double)childrenNumber, (double)childLevel);
+
+            for (int i = 0; i < childrenNumber; i++)
             {
-                
+                for (int j = 0; j < childrenNumber; j++)
+                    {
+                        Vector2 newCoordinates = new Vector2(this.thisCoordinate.X + (xCoordinate * j), this.thisCoordinate.Y + (yCoordinate * i));
+                        children[j,i] = new gridSpace(childLevel, new Vector2(childSize, childSize), childPos, newCoordinates, childrenNumber, this);
+                        childPos.X += childSize;
+                    }
+                childPos.Y += childSize;
+                childPos.X = position.X;
             }
         }
 
@@ -79,6 +99,11 @@ namespace Ascension2
                 {
                     indexX = (xCoordinate - (int)thisCoordinate.X)/multiplier;
                 }
+                if (!hasChildren)
+                {
+                    createChildren();
+                }
+                
                 return children[indexX, indexY].getChild(xCoordinate,yCoordinate);
             }
             else
@@ -89,6 +114,10 @@ namespace Ascension2
 
         public void fillGrid(int xCoord, int yCoord, Texture2D newTexture)
         {
+            if (level > 0 && !hasChildren)
+            {
+                createChildren();
+            }
             gridSpace child = getChild(xCoord, yCoord);
             child.setTexture(newTexture);
         }

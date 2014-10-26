@@ -27,5 +27,10 @@ namespace Ascension2.Fraser
             this.other = otherObject;
             this.point = otherPoint;
         }
+
+        public Collision(GameObject otherObject)
+        {
+            this.other = otherObject;
+        }
     }
 }
