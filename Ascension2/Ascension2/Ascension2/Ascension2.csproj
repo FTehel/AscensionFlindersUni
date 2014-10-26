@@ -83,6 +83,10 @@
     <Compile Include="Fraser\Level.cs" />
     <Compile Include="Fraser\PhysicsObject.cs" />
     <Compile Include="Fraser\proceduralGenerator.cs" />
+    <Compile Include="Matthew\cButton.cs" />
+    <Compile Include="Matthew\fBar.cs" />
+    <Compile Include="Matthew\lowFuel.cs" />
+    <Compile Include="Matthew\mGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

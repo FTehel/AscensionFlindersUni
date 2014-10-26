@@ -24,6 +24,21 @@ namespace Ascension2
         int screenWidth;
         int screenHeight;
 
+        //Create game states
+        enum GameState
+        {
+            MainMenu,
+            Options,
+            Playing,
+        }
+        //set initial game state to main menu
+        GameState CurrentGameState = GameState.MainMenu;
+
+        cButton btnPlay;
+        cButton btnOption;
+        cButton btnMenu;
+        fBar fuel;
+
         public Level thisLevel;
 
         Texture2D brickTexture;
@@ -33,7 +48,6 @@ namespace Ascension2
         proceduralGenerator generator;
 
         GameObject[] gameObjects = new GameObject[0];
-
 
         Texture2D playerTexture;
         Player player;
@@ -56,7 +70,7 @@ namespace Ascension2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            SoundEffect.MasterVolume = 0.2f;
             base.Initialize();
         }
 
@@ -66,10 +80,25 @@ namespace Ascension2
         /// </summary>
         protected override void LoadContent()
         {
+            IsMouseVisible = true;
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             loadFunction();
+            loadInterface();
             // TODO: use this.Content to load your game content here
+        }
+        
+        public void loadInterface()
+        {
+            btnPlay = new cButton(Content.Load<Texture2D>("Matthew/playButton"), graphics.GraphicsDevice, new Vector2(screenWidth / 5, screenHeight / 20));
+            btnPlay.setPosition(new Vector2((screenWidth / 2) - ((screenWidth / 5) / 2), screenHeight - 100));
+
+            btnMenu = new cButton(Content.Load<Texture2D>("Matthew/menuButton"), graphics.GraphicsDevice, new Vector2(screenWidth / 8, screenHeight / 25));
+            btnMenu.setPosition(new Vector2((screenWidth -75) - ((screenWidth / 8) / 2), (screenHeight - 575)));
+
+            fuel = new fBar(Content.Load<Texture2D>("Matthew/hBar"), graphics.GraphicsDevice, player.getFuelLevel);
+            fuel.setPosition(new Vector2((screenWidth - 924) - ((screenWidth / 8) / 2), (screenHeight - 575)));
         }
 
         public void loadFunction()
@@ -95,6 +124,7 @@ namespace Ascension2
             generator.generateGround(brickTexture, thisLevel);
 
             playerTexture = Content.Load<Texture2D>("Simon/Player");
+<<<<<<< HEAD
             player = new Player(playerTexture, new Vector2(1, 100), spriteBatch);
             player.size = new Vector2(40,90);
             player.screenWidth = screenWidth;
@@ -104,6 +134,9 @@ namespace Ascension2
             Console.WriteLine("camera " + screenHeight + " " + screenWidth);
 
             
+=======
+            player = new Player(playerTexture, new Vector2(300, 400), spriteBatch, Content);
+>>>>>>> origin/master
 
             camera.parent = player;
             debugFont = Content.Load<SpriteFont>("Simon/DebugFont");
@@ -142,7 +175,23 @@ namespace Ascension2
                 this.Exit();
 
             // TODO: Add your update logic here
-            updateFunction(gameTime);
+            MouseState mouse = Mouse.GetState();
+
+            //load functonality to buttons
+            switch (CurrentGameState)
+            {
+                case GameState.MainMenu:
+                    if (btnPlay.isClicked == true) CurrentGameState = GameState.Playing;
+                    btnPlay.Update(mouse);
+                    break;
+                case GameState.Playing:
+                    if (btnMenu.isClicked == true) CurrentGameState = GameState.MainMenu;
+                    btnMenu.Update(mouse);
+                    if (player.getFuelLevel >= 0) { fuel.Update(player.getFuelLevel); }
+                    updateFunction(gameTime);
+                    break;
+            }
+            
 
             base.Update(gameTime);
         }
@@ -168,20 +217,35 @@ namespace Ascension2
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            drawLevel(thisLevel);
-
-            string debugInfo = string.Format("Jetpack Fuel: {0:0.0}", player.getFuelLevel);
-            string debugInfo2 = string.Format("Location: {0:0.0}", player.getPlayerBounds);
-            string debugInfo3 = string.Format("X Velocity: {0:0}, Y Velocity: {1:0}", player.GetHorizontalVelocity, player.GetVerticalVelocity);
-
-            player.Draw(gameTime, camera.worldToScreen(player.position, screenWidth, screenHeight));
-
-            if (enableDebug)
+            switch (CurrentGameState)
             {
-                spriteBatch.DrawString(debugFont, debugInfo, new Vector2(10, 0), Color.White);
-                spriteBatch.DrawString(debugFont, debugInfo2, new Vector2(10, 20), Color.White);
-                spriteBatch.DrawString(debugFont, debugInfo3, new Vector2(10, 40), Color.White);
+                case GameState.MainMenu:
+                    spriteBatch.Draw(Content.Load<Texture2D>("Matthew/MainMenu"), new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
+                    btnPlay.Draw(spriteBatch);
+                    break;
+                case GameState.Playing:               
+                    drawLevel(thisLevel);
+
+                    string debugInfo = string.Format("Jetpack Fuel: {0:0.0}", player.getFuelLevel);
+                    string debugInfo2 = string.Format("Location: {0:0.0}", player.getPlayerBounds);
+                    string debugInfo3 = string.Format("X Velocity: {0:0}, Y Velocity: {1:0}", player.GetHorizontalVelocity, player.GetVerticalVelocity);
+
+                    player.Draw(gameTime, camera.worldToScreen(player.position, screenWidth, screenHeight));
+                    fuel.Draw(spriteBatch);
+                    if (enableDebug)
+                        {
+                            spriteBatch.DrawString(debugFont, debugInfo, new Vector2(10, 0), Color.White);
+                            spriteBatch.DrawString(debugFont, debugInfo2, new Vector2(10, 20), Color.White);
+                            spriteBatch.DrawString(debugFont, debugInfo3, new Vector2(10, 40), Color.White);
+                        }
+                    btnMenu.Draw(spriteBatch);
+                    
+                    break;
             }
+
+
+
+
 
             base.Draw(gameTime);
             spriteBatch.End();

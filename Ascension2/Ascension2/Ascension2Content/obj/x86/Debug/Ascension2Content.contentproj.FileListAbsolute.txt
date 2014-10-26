@@ -1,2 +1,4 @@
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2Content\obj\x86\Debug\Ascension2Content.contentprojResolveAssemblyReference.cache
 C:\Users\Simon\Documents\MEGA\Computer Game Development\Group\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2Content\obj\x86\Debug\Ascension2Content.contentprojResolveAssemblyReference.cache
+C:\Users\Simon\Desktop\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2Content\obj\x86\Debug\Ascension2Content.contentprojResolveAssemblyReference.cache
+C:\Users\matthew\Documents\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2Content\obj\x86\Debug\Ascension2Content.contentprojResolveAssemblyReference.cache

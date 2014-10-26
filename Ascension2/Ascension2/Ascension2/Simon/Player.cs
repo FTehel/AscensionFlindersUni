@@ -17,6 +17,11 @@ namespace Ascension2
 {
     public class Player : GameObject
     {
+        ContentManager content;
+        SoundEffect jumpSound;
+        SoundEffectInstance jet;
+        SoundEffect jetSound;
+
         Texture2D texture;
 
         PhysicsObject physics = new PhysicsObject();
@@ -82,13 +87,20 @@ namespace Ascension2
         }
         ///////////////////////////
 
-        public Player(Texture2D texture, Vector2 position, SpriteBatch batch)
+        public Player(Texture2D texture, Vector2 position, SpriteBatch batch, ContentManager content)
         {
             this.texture = texture;
+            this.content = content;
             oldState = Keyboard.GetState();
             spriteBatch = batch;
             jetpackFuel = maxFuel;
             this.position = position;
+
+            jumpSound = content.Load<SoundEffect>("Simon/jump");
+            jetSound = content.Load<SoundEffect>("Simon/jet");
+
+            jet = jetSound.CreateInstance();
+            jet.IsLooped = true;
         }
 
         public Rectangle getPlayerBounds
@@ -142,10 +154,11 @@ namespace Ascension2
             }
 
             //Jumping (    NEED COLLISION DETECTION FOR FLOOR - isOnGround()    )
-            if (newState.IsKeyDown(Keys.Up) && position.Y == 2000)
+            if (newState.IsKeyDown(Keys.Up))
             {
                 if (!oldState.IsKeyDown(Keys.Up))
                 {
+                    jumpSound.Play();
                     VMovement = Vector2.Zero;
                     VMovement = Vector2.UnitY * 30;
                     HMovement += Vector2.UnitY * jumpForce * getGameTime(gameTime);
@@ -235,9 +248,12 @@ namespace Ascension2
         public void jetpackMovement(GameTime gameTime)
         {
             KeyboardState newState = Keyboard.GetState();
-
+            
             if (newState.IsKeyDown(Keys.Space))
             {
+                
+                jet.Play(); 
+               
                 //VMovement = Vector2.UnitY * 15;
                 //jetpackFuel -= 20;
                 HMovement += Vector2.UnitY * jetPackSpeed * (float)(gameTime.ElapsedGameTime.TotalSeconds);
@@ -245,6 +261,7 @@ namespace Ascension2
             }
             else
             {
+                jet.Stop();
                 flying = false;
             }
             if (jetpackFuel < maxFuel && !newState.IsKeyDown(Keys.Space))
