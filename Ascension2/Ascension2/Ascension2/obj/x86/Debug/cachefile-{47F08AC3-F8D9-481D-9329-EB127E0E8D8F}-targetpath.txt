@@ -3,3 +3,8 @@ Content\Simon\Player.xnb
 Content\Simon\DebugFont.xnb
 Content\Simon\jet.xnb
 Content\Simon\jump.xnb
+Content\Matthew\hBar.xnb
+Content\Matthew\MainMenu.xnb
+Content\Matthew\playButton.xnb
+Content\Matthew\score.xnb
+Content\Matthew\menuButton.xnb
