@@ -11,7 +11,7 @@ namespace Ascension2
     {
         public gridLine[] tilesXPositive;
         public gridLine[] tilesXNegative;
-        int level = 1;
+        int level = 10;
         int sizeInGrids;
         float size = 20;
         public int gridSize = 20;

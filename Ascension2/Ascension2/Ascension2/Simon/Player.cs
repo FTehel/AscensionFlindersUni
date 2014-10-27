@@ -52,6 +52,11 @@ namespace Ascension2
         int playerWidth = 40;
         int playerHeight = 90;
 
+        public int screenWidth;
+        public int screenHeight;
+
+        public Camera camera;
+
         //Sprite variables
         public SpriteBatch spriteBatch { get; set; }
         SpriteEffects spriteEffects = SpriteEffects.None;
@@ -63,10 +68,10 @@ namespace Ascension2
         ///////////////////////////
 
         //Player Variables
-        float runSpeed = 2.0f;
-        float jetPackSpeed = 5.0f;
-        float gravity = 2.0f;
-        float jumpForce = 3.0f;
+        float runSpeed = 40.0f;
+        float jetPackSpeed = 60.0f;
+        float gravity = 30.0f;
+        float jumpForce = 60.0f;
 
         ///////////////////////
 
@@ -98,6 +103,21 @@ namespace Ascension2
             jet.IsLooped = true;
         }
 
+        public Player(Texture2D texture, Vector2 position, SpriteBatch batch)
+        {
+            this.texture = texture;
+            oldState = Keyboard.GetState();
+            spriteBatch = batch;
+            jetpackFuel = maxFuel;
+            this.position = position;
+
+            //jumpSound = content.Load<SoundEffect>("Simon/jump");
+            //jetSound = content.Load<SoundEffect>("Simon/jet");
+
+            //jet = jetSound.CreateInstance();
+            //jet.IsLooped = true;
+        }
+
         public Rectangle getPlayerBounds
         {
             get
@@ -119,19 +139,25 @@ namespace Ascension2
             else if (jumping) { startingFrame = 1; frameCount = 1; }
             else if (running) { startingFrame = 0; frameCount = 3; }
             else { startingFrame = 0; frameCount = 1; }
-
             startingFrame += (int)(time * framesPerSecond) % frameCount;
             if (texture != null)
             {
-                spriteBatch.Draw(texture, camPosition, new Rectangle(startingFrame * playerWidth, playerEvolution * playerHeight, playerWidth, playerHeight), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
+                spriteBatch.Draw(texture, camera.worldToScreen(position, size, screenWidth, screenHeight), new Rectangle(startingFrame * (int)size.X, playerEvolution * (int)size.Y, (int)size.X, (int)size.Y), Color.White, 0.0f, Vector2.Zero, 1.0f, spriteEffects, 0.5f);
+               /* Vector2 screenPos = camera.worldToScreen(position, size, screenWidth, screenHeight);
+                Rectangle drawRect = new Rectangle((int)screenPos.X, (int)screenPos.Y, (int)size.X, (int)size.Y);
+                spriteBatch.Draw(texture, drawRect, Color.White);*/
+                //Console.WriteLine("Player " + camera.worldToScreen(position, screenWidth, screenHeight) + " " + camera.worldToScreen(camera.position, screenWidth, screenHeight));
             }
         }
 
         public void Update(GameTime gameTime, Level thisLevel)
         {
             KeyboardState newState = Keyboard.GetState();
+<<<<<<< HEAD
             physics.position = position;
 
+=======
+>>>>>>> origin/master
             //Running
             if (newState.IsKeyDown(Keys.Left))
             {
@@ -181,12 +207,12 @@ namespace Ascension2
 
             //Simulate gravity
             //IF !isOnGround() THEN
-            if (position.Y > 2000)
-            {
+            //if (position.Y > 2000)
+            //{
                 VMovement -= Vector2.UnitY * 2.4f;
                 VMovement = Vector2.Zero;
-                HMovement -= Vector2.UnitY * gravity * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
-            }
+                HMovement -= Vector2.UnitY * gravity * (float)(gameTime.ElapsedGameTime.TotalSeconds);
+            //}
 
             //Simulate friction
             //HMovement -= HMovement * new Vector2(.1f, 0);
@@ -195,9 +221,11 @@ namespace Ascension2
             physics.position = position;
             physics.size = size;
             HMovement = physics.updatePhysics(gameTime, thisLevel, HMovement);
-            position += HMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
+            position += HMovement * (float)gameTime.ElapsedGameTime.TotalSeconds;
             VMovement = Vector2.Zero;
-            position += VMovement * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 25;
+            position += VMovement * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            HMovement = physics.updatePhysics(gameTime, thisLevel, HMovement);
 
             //Temporary measures to prevent character leaving screen and test item progression
             /*if (position.Y < 2000)
@@ -251,7 +279,7 @@ namespace Ascension2
                
                 //VMovement = Vector2.UnitY * 15;
                 //jetpackFuel -= 20;
-                HMovement += Vector2.UnitY * jetPackSpeed * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 25);
+                HMovement += Vector2.UnitY * jetPackSpeed * (float)(gameTime.ElapsedGameTime.TotalSeconds);
                 flying = true;
             }
             else
