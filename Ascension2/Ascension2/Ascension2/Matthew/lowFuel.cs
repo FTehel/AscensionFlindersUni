@@ -25,8 +25,7 @@ namespace Ascension2
             //width = 100;
             //height = graphics.Viewport.Height / 40;
             colour.B = 0; colour.G = 0; colour.R = 255; colour.A = 255;
-            visible = false;
-
+            visible = true;
             size = new Vector2(graphics.Viewport.Width, graphics.Viewport.Height);
             rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             
@@ -37,7 +36,6 @@ namespace Ascension2
 
         public void Update()
         {
-            
                 if (colour.A == 255) down = false;
                 if (colour.A == 0) down = true;
                 if (down) colour.A += 5; else colour.A -= 5;

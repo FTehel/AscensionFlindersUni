@@ -130,7 +130,6 @@ namespace Ascension2
         public void Update(GameTime gameTime, Level thisLevel)
         {
             KeyboardState newState = Keyboard.GetState();
-
             physics.position = position;
 
             //Running

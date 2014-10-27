@@ -38,7 +38,12 @@ namespace Ascension2
         cButton btnOption;
         cButton btnMenu;
         fBar fuel;
-
+        SpriteFont scoreFont;
+        Vector2 scoreFontPos;
+        SpriteFont scoreFontD;
+        Vector2 scoreFontPosD;
+        lowFuel lFuel;
+        int a;
         public Level thisLevel;
 
         Texture2D brickTexture;
@@ -99,6 +104,16 @@ namespace Ascension2
 
             fuel = new fBar(Content.Load<Texture2D>("Matthew/hBar"), graphics.GraphicsDevice, player.getFuelLevel);
             fuel.setPosition(new Vector2((screenWidth - 924) - ((screenWidth / 8) / 2), (screenHeight - 575)));
+
+            scoreFont = Content.Load<SpriteFont>("Matthew/score");
+            scoreFontPos = new Vector2(screenWidth / 2, screenHeight - 75);
+
+            scoreFontD = Content.Load<SpriteFont>("Matthew/score");
+            scoreFontPosD = new Vector2((screenWidth / 2)+2, screenHeight - 73);
+
+            lFuel = new lowFuel(Content.Load<Texture2D>("Matthew/lh"), graphics.GraphicsDevice);
+
+            
         }
 
         public void loadFunction()
@@ -173,9 +188,12 @@ namespace Ascension2
                     btnPlay.Update(mouse);
                     break;
                 case GameState.Playing:
+                    a += 1;
+                    lFuel.Update();
                     if (btnMenu.isClicked == true) CurrentGameState = GameState.MainMenu;
                     btnMenu.Update(mouse);
-                    if (player.getFuelLevel >= 0) { fuel.Update(player.getFuelLevel); }
+                    if (player.getFuelLevel >= 0) { fuel.Update(player.getFuelLevel, gameTime); }
+                    if (fuel.getWidth() <= 30) { lFuel.visible = true; } else { lFuel.visible = false; }
                     updateFunction(gameTime);
                     break;
             }
@@ -202,7 +220,6 @@ namespace Ascension2
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             switch (CurrentGameState)
@@ -213,6 +230,12 @@ namespace Ascension2
                     break;
                 case GameState.Playing:               
                     drawLevel(thisLevel);
+                    lFuel.Draw(spriteBatch);
+                    string output = a.ToString();
+                    
+                    Vector2 FontOrigin = scoreFont.MeasureString(output) / 2;
+                    spriteBatch.DrawString(scoreFontD, output, scoreFontPosD, Color.Black, 0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    spriteBatch.DrawString(scoreFont, output, scoreFontPos, Color.White, 0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
 
                     string debugInfo = string.Format("Jetpack Fuel: {0:0.0}", player.getFuelLevel);
                     string debugInfo2 = string.Format("Location: {0:0.0}", player.getPlayerBounds);
@@ -226,15 +249,10 @@ namespace Ascension2
                             spriteBatch.DrawString(debugFont, debugInfo2, new Vector2(10, 20), Color.White);
                             spriteBatch.DrawString(debugFont, debugInfo3, new Vector2(10, 40), Color.White);
                         }
-                    btnMenu.Draw(spriteBatch);
-                    
+                    btnMenu.Draw(spriteBatch);                    
                     break;
             }
-
-
-
-
-
+            
             base.Draw(gameTime);
             spriteBatch.End();
 
