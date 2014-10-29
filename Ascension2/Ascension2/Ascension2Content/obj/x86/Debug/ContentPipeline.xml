@@ -91,6 +91,15 @@
       <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\jump.xnb</Output>
       <Time>2014-10-26T22:25:06.1140302+10:30</Time>
     </Item>
+    <Item>
+      <Source>Fraser\StoneTilesTexture.jpg</Source>
+      <Name>Fraser\StoneTilesTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\StoneTilesTexture.xnb</Output>
+      <Time>2014-10-28T18:04:16.1964733+10:30</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

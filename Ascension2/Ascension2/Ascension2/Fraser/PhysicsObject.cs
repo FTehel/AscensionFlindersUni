@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ascension2.Fraser;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Ascension2.Fraser
 {
@@ -12,9 +13,11 @@ namespace Ascension2.Fraser
 
         Boolean collided = false;
         public Collision[] currentCollisions = new Collision[0];
+        public CollisionPoint[] currentPoints = new CollisionPoint[0];
         Boolean hasCollision = true;
         Vector2 velocity;
         int checks = 0;
+        public Texture2D collideTexture; 
 
         public enum sides
         {
@@ -102,6 +105,11 @@ namespace Ascension2.Fraser
 
                         if (isBetweenValues(thisMaxY, otherMaxY, otherMinY) || isBetweenValues(thisMinY, otherMaxY, otherMinY))
                         {
+                            Boolean isEdge = false;
+                            if (thisMaxX == otherMinX || thisMaxY == otherMinY || thisMinY == otherMaxY || thisMinX == otherMaxX)
+                            {
+                                isEdge = true;
+                            }
                             if (currentMaxY < otherMinY)
                             {
 
@@ -121,12 +129,12 @@ namespace Ascension2.Fraser
                                 }
                                 else
                                 {
-                                    collisions = addToCollisionList(collisions, new Collision(other));
+                                    collisions = addToCollisionList(collisions, new Collision(other, isEdge));
                                 }
                             }
                             else
                             {
-                                collisions = addToCollisionList(collisions, new Collision(other));
+                                collisions = addToCollisionList(collisions, new Collision(other, isEdge));
                             }
                         }
                     }
@@ -158,7 +166,18 @@ namespace Ascension2.Fraser
                         int otherMaxY = (int)other.position.Y + (int)other.size.Y;
                         int otherMinY = (int)other.position.Y;
 
-                        
+                        Vector2 OCorner1 = other.position;
+                        Vector2 OCorner2 = other.position;
+                        OCorner2.Y += other.size.Y;
+                        Vector2 OCorner3 = other.position;
+                        OCorner3 += other.size;
+                        Vector2 OCorner4 = other.position;
+                        OCorner4.X += other.size.X;
+
+                        Vector2 Ocorner1Projection = OCorner1 - newVelocity;
+                        Vector2 Ocorner2Projection = OCorner2 - newVelocity;
+                        Vector2 Ocorner3Projection = OCorner3 - newVelocity;
+                        Vector2 Ocorner4Projection = OCorner4 - newVelocity;
 
                         Vector2 corner1 = position;
                         Vector2 corner2 = position;
@@ -188,9 +207,19 @@ namespace Ascension2.Fraser
                         CollisionPoint[] collisionsC = getCollisionPointOnRectangle(corner3, corner3Projection, other);
                         CollisionPoint[] collisionsD = getCollisionPointOnRectangle(corner4, corner4Projection, other);
 
+                        CollisionPoint[] collisionsE = getCollisionPointOnRectangle2(OCorner1, Ocorner1Projection, this);
+                        CollisionPoint[] collisionsF = getCollisionPointOnRectangle2(OCorner2, Ocorner2Projection, this);
+                        CollisionPoint[] collisionsG = getCollisionPointOnRectangle2(OCorner3, Ocorner3Projection, this);
+                        CollisionPoint[] collisionsH = getCollisionPointOnRectangle2(OCorner4, Ocorner4Projection, this);
+
                         collisionsA = joinCollisionPointList(collisionsA, collisionsB);
                         collisionsA = joinCollisionPointList(collisionsA, collisionsC);
                         collisionsA = joinCollisionPointList(collisionsA, collisionsD);
+
+                        collisionsA = joinCollisionPointList(collisionsA, collisionsE);
+                        collisionsA = joinCollisionPointList(collisionsA, collisionsF);
+                        collisionsA = joinCollisionPointList(collisionsA, collisionsG);
+                        collisionsA = joinCollisionPointList(collisionsA, collisionsH);
 
                         if (collisionsA.Length > 0)
                         {
@@ -277,10 +306,12 @@ namespace Ascension2.Fraser
         public void getCollisionForLevel(Level otherLevel, GameTime gameTime){
             if (velocity.Length() > 0)
             {
+                Console.WriteLine("Getting collision");
                 Vector2 newPos = (velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) + position;
                 Vector2 newVelocity = velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Vector2 currentPos = position;
                 Collision[] collisions = new Collision[0];
+                currentPoints = new CollisionPoint[0];
                 currentCollisions = new Collision[0];
                 for (int i = 0; i < otherLevel.tilesXPositive.Length; i++)
                 {
@@ -299,12 +330,22 @@ namespace Ascension2.Fraser
                     }
                 }
                 currentCollisions = collisions;
+                currentPoints = getAllCollisionPoints(currentPos, currentPoints, newVelocity);
             }
+        }
+
+        public CollisionPoint[] getAllCollisionPoints(Vector2 currentPos, CollisionPoint[] collisions, Vector2 newVelocity){
+            for (int i = 0; i < currentCollisions.Length; i++)
+            {
+                Console.WriteLine("getting collision points " + i);
+                collisions = getCollisionPoints(position, currentCollisions[i].other, collisions, newVelocity);
+            }
+            return collisions;
         }
 
         public Boolean isBetweenValues(int x, int y, int z)
         {
-            if ((x > y && x < z) || (x > z && x < y))
+            if ((x >= y && x <= z) || (x >= z && x <= y))
             {
                 return true;
             }
@@ -329,24 +370,40 @@ namespace Ascension2.Fraser
             velocity = currentVelocity;
             getCollisionForLevel(thisLevel, gameTime);
             getCollisionEnter();
-            stopOnCollision(gameTime);
+            stopOnCollision(gameTime, thisLevel);
             return velocity;
         }
 
-        public void stopOnCollision(GameTime gameTime)
+        public void stopOnCollision(GameTime gameTime, Level thisLevel)
         {
             if(hasCollision){
-                if(currentCollisions.Length > 0){                        
+                int i = 0;
+                while(collisionNonEdgeCount() > 0 && velocity.Length() > 0 && i < 1){
                     velocity = getCollisionVelocity(currentCollisions, gameTime);
+                    getCollisionForLevel(thisLevel, gameTime);
+                    i++;
                 }
             }
+        }
+
+        public int collisionNonEdgeCount()
+        {
+            int count = 0;
+            for (int i = 0; i < currentCollisions.Length; i++)
+            {
+                if (!currentCollisions[i].edge)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         public Vector2 getCollisionVelocity(Collision[] collisions, GameTime time)
         {
             Vector2 newVelocity = velocity;
             
-            float deltaTime = (float)time.TotalGameTime.TotalSeconds;
+            float deltaTime = (float)time.ElapsedGameTime.TotalSeconds;
 
             newVelocity *= deltaTime;
 
@@ -355,30 +412,31 @@ namespace Ascension2.Fraser
             Boolean left = true;
             Boolean right = true;
 
-            CollisionPoint[] points = new CollisionPoint[0];
             for (int i = 0; i < currentCollisions.Length; i++)
             {
                 Vector2 otherPos = currentCollisions[i].other.position;
                 Vector2 otherSize = currentCollisions[i].other.size;
-                if (otherPos.X == position.X + size.X)
+                if ((int)otherPos.X <= (int)position.X + (int)size.X + 1)
                 {
                     right = false;
+                    //position.X = otherPos.X - 1;
                 }
-                if (otherPos.X + otherSize.X == position.X)
+                if ((int)otherPos.X + (int)otherSize.X + 1 >= (int)position.X)
                 {
                     left = false;
+                    //position.X = otherPos.X + otherSize.X;
                 }
-                if (otherPos.Y == position.Y + size.Y)
+                if ((int)otherPos.Y <= (int)position.Y + (int)size.Y + 1)
                 {
                     up = false;
+                    // position.Y = otherPos.Y;
                 }
-                if (otherPos.Y + otherSize.Y == position.Y)
+                if ((int)otherPos.Y + (int)otherSize.Y + 1 >= (int)position.Y)
                 {
                     down = false;
                 }
-                points = getCollisionPoints(position, currentCollisions[i].other, points, newVelocity);
             }
-
+            if (currentPoints.Length > 0) { 
                 if (deltaTime != 0)
                 {
                     Vector2 nVelocity = velocity;
@@ -386,7 +444,7 @@ namespace Ascension2.Fraser
                     float dot = 0;
                     float speed = velocity.Length() * deltaTime;
 
-                    CollisionPoint shortest = getShortestCollision(points);
+                    CollisionPoint shortest = getShortestCollision(currentPoints);
                     Vector2 side = shortest.otherSide;
                     Vector2 collisionOverlap = shortest.origin + (velocity * deltaTime) - shortest.collision;
                     float collisionOverlapLength = collisionOverlap.Length();
@@ -405,6 +463,7 @@ namespace Ascension2.Fraser
                     newVelocity = (shortest.collision - shortest.origin) + (sideVelocity * dot * collisionOverlapLength);
                     newVelocity /= deltaTime;
                 }
+            }
                 if (!left && newVelocity.X < 0)
                 {
                     newVelocity.X = 0;
@@ -468,6 +527,7 @@ namespace Ascension2.Fraser
             float percentB = getCollisionPercent(originB, destinationB, originA, destinationA);
 
             if (percentA >= 0 && percentA <= 1 && percentB >= 0 && percentB <= 1)
+            //if (percentA != 0 && percentB != 0)
             {
 
                 Vector2 pointVector = originA + (percentA * (destinationA - originA));
@@ -483,6 +543,7 @@ namespace Ascension2.Fraser
             float percentB = getCollisionPercent(originB, destinationB, originA, destinationA);
 
             if (percentA >= 0 && percentA <= 1 && percentB >= 0 && percentB <= 1)
+            //if(percentA != 0 && percentB != 0)
             {
                 return true;
             }
@@ -532,6 +593,46 @@ namespace Ascension2.Fraser
             {
                 Vector2 point = getCollisionPoint(originA, destinationA, corner4, corner1);
                 CollisionPoint newPoint = new CollisionPoint(originA, point, corner4, corner1);
+                returnList = addToCollisionPointList(returnList, newPoint);
+            }
+
+
+
+            return returnList;
+        }
+
+
+        public CollisionPoint[] getCollisionPointOnRectangle2(Vector2 originA, Vector2 destinationA, GameObject other)
+        {
+            CollisionPoint[] returnList = new CollisionPoint[0];
+            Vector2 corner1 = other.position;
+            Vector2 corner2 = other.position;
+            corner2.X += other.size.X;
+            Vector2 corner3 = other.position + other.size;
+            Vector2 corner4 = other.position;
+            corner4.Y += other.size.Y;
+            if (doesCollide(originA, destinationA, corner1, corner2))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner1, corner2);
+                CollisionPoint newPoint = new CollisionPoint(point, originA, corner1, corner2);
+                returnList = addToCollisionPointList(returnList, newPoint);
+            }
+            if (doesCollide(originA, destinationA, corner2, corner3))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner2, corner3);
+                CollisionPoint newPoint = new CollisionPoint(point, originA, corner2, corner3);
+                returnList = addToCollisionPointList(returnList, newPoint);
+            }
+            if (doesCollide(originA, destinationA, corner3, corner4))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner3, corner4);
+                CollisionPoint newPoint = new CollisionPoint(point, originA, corner3, corner4);
+                returnList = addToCollisionPointList(returnList, newPoint);
+            }
+            if (doesCollide(originA, destinationA, corner4, corner1))
+            {
+                Vector2 point = getCollisionPoint(originA, destinationA, corner4, corner1);
+                CollisionPoint newPoint = new CollisionPoint(point, originA, corner4, corner1);
                 returnList = addToCollisionPointList(returnList, newPoint);
             }
 

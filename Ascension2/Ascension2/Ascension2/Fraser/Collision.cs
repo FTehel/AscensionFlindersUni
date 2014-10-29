@@ -11,6 +11,7 @@ namespace Ascension2.Fraser
         public Vector2 position;
         public GameObject other;
         public CollisionPoint point;
+        public Boolean edge = false;
 
 
         public PhysicsObject.sides side = PhysicsObject.sides.top;
@@ -28,9 +29,10 @@ namespace Ascension2.Fraser
             this.point = otherPoint;
         }
 
-        public Collision(GameObject otherObject)
+        public Collision(GameObject otherObject, Boolean isEdge)
         {
             this.other = otherObject;
+            this.edge = isEdge;
         }
     }
 }

@@ -20,7 +20,8 @@ namespace Ascension2
             Vector2 offset = other - position;
             Vector2 centre = new Vector2(width / 2, height / 2);
             offset.Y *= -1;
-            return centre + offset - size;
+            offset.Y -= size.Y;
+            return centre + offset;
         }
 
         public void Update(GameTime theGameTime)

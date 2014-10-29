@@ -50,3 +50,4 @@ C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascens
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\score.xnb
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\jet.xnb
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\jump.xnb
+C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\StoneTilesTexture.xnb

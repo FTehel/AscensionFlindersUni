@@ -69,7 +69,7 @@ namespace Ascension2
 
         //Player Variables
         float runSpeed = 40.0f;
-        float jetPackSpeed = 60.0f;
+        float jetPackSpeed = 100.0f;
         float gravity = 30.0f;
         float jumpForce = 60.0f;
 
@@ -129,7 +129,7 @@ namespace Ascension2
 
         public void Draw(GameTime gameTime, Vector2 camPosition)
         {
-            float time = (float)gameTime.TotalGameTime.TotalSeconds;
+            float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             int startingFrame;
             int frameCount;
