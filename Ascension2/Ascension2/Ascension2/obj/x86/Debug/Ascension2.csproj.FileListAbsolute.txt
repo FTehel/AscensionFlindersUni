@@ -43,6 +43,9 @@ C:\Users\matthew\Documents\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Asc
 C:\Users\matthew\Documents\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\playButton.xnb
 C:\Users\matthew\Documents\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\score.xnb
 C:\Users\matthew\Documents\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\menuButton.xnb
+<<<<<<< HEAD
+C:\Users\matthew\Documents\GitHub\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\lh.xnb
+=======
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\hBar.xnb
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\MainMenu.xnb
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\playButton.xnb
@@ -50,4 +53,8 @@ C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascens
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\score.xnb
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\jet.xnb
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\jump.xnb
+<<<<<<< HEAD
 C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\StoneTilesTexture.xnb
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master

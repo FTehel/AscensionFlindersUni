@@ -96,8 +96,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Fraser\StoneTilesTexture.jpg">
       <Name>StoneTilesTexture</Name>
+=======
+    <Compile Include="Matthew\lh.png">
+      <Name>lh</Name>
+>>>>>>> origin/master
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
