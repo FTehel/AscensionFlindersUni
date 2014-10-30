@@ -100,13 +100,13 @@ namespace Ascension2.Fraser
                     int currentMaxY = (int)currentPos.Y + (int)size.Y;
                     int currentMinY = (int)currentPos.Y;
 
-                    if (isBetweenValues(thisMaxX, otherMaxX, otherMinX) || isBetweenValues(thisMinX, otherMaxX, otherMinX))
+                    if (isBetweenValues(thisMaxX, otherMaxX + 1, otherMinX -1) || isBetweenValues(thisMinX, otherMaxX + 1, otherMinX - 1))
                     {
 
-                        if (isBetweenValues(thisMaxY, otherMaxY, otherMinY) || isBetweenValues(thisMinY, otherMaxY, otherMinY))
+                        if (isBetweenValues(thisMaxY, otherMaxY + 1, otherMinY - 1) || isBetweenValues(thisMinY, otherMaxY + 1, otherMinY - 1))
                         {
                             Boolean isEdge = false;
-                            if (thisMaxX == otherMinX || thisMaxY == otherMinY || thisMinY == otherMaxY || thisMinX == otherMaxX)
+                            if (thisMaxX + 1 == otherMinX || thisMaxY + 1== otherMinY || thisMinY - 1 == otherMaxY || thisMinX - 1 == otherMaxX)
                             {
                                 isEdge = true;
                             }

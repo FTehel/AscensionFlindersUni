@@ -96,15 +96,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Fraser\StoneTilesTexture.jpg">
       <Name>StoneTilesTexture</Name>
-=======
-    <Compile Include="Matthew\lh.png">
-      <Name>lh</Name>
->>>>>>> origin/master
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+      <!--<Compile Include="Matthew\lh.png">
+        <Name>lh</Name>
+        <Importer>TextureImporter</Importer>
+        <Processor>TextureProcessor</Processor>
+      </Compile>
+
+      <Compile Include="Matthew\lh.png">
+        <Name>lh</Name>
+        <Importer>TextureImporter</Importer>
+        <Processor>TextureProcessor</Processor>
+      </Compile>-->
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

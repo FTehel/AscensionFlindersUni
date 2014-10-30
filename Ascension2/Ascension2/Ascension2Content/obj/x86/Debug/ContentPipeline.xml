@@ -71,7 +71,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\score.xnb</Output>
-      <Time>2014-10-26T22:25:06.1000215+10:30</Time>
+      <Time>2014-10-30T10:24:22.0550764+10:30</Time>
     </Item>
     <Item>
       <Source>Simon\jet.wav</Source>
@@ -95,10 +95,9 @@
       <Source>Fraser\StoneTilesTexture.jpg</Source>
       <Name>Fraser\StoneTilesTexture</Name>
       <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Fraser\StoneTilesTexture.xnb</Output>
-      <Time>2014-10-28T18:04:16.1964733+10:30</Time>
+      <Time>2014-10-30T10:24:19.1571438+10:30</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

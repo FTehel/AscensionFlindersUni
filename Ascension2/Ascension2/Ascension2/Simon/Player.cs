@@ -153,11 +153,7 @@ namespace Ascension2
         public void Update(GameTime gameTime, Level thisLevel)
         {
             KeyboardState newState = Keyboard.GetState();
-<<<<<<< HEAD
             physics.position = position;
-
-=======
->>>>>>> origin/master
             //Running
             if (newState.IsKeyDown(Keys.Left))
             {

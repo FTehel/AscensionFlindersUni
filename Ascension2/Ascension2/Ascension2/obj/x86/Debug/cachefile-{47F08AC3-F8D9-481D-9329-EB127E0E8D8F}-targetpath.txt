@@ -5,14 +5,7 @@ Content\Matthew\hBar.xnb
 Content\Matthew\MainMenu.xnb
 Content\Matthew\playButton.xnb
 Content\Matthew\menuButton.xnb
-<<<<<<< HEAD
-Content\Matthew\lh.xnb
-=======
 Content\Matthew\score.xnb
 Content\Simon\jet.xnb
 Content\Simon\jump.xnb
-<<<<<<< HEAD
 Content\Fraser\StoneTilesTexture.xnb
-=======
->>>>>>> origin/master
->>>>>>> origin/master
