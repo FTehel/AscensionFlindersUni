@@ -20,15 +20,6 @@
       <Time>2014-10-13T12:17:22.364861+10:30</Time>
     </Item>
     <Item>
-      <Source>Simon\DebugFont.spritefont</Source>
-      <Name>Simon\DebugFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\DebugFont.xnb</Output>
-      <Time>2014-10-13T12:17:22.3628603+10:30</Time>
-    </Item>
-    <Item>
       <Source>Matthew\hBar.png</Source>
       <Name>Matthew\hBar</Name>
       <Importer>TextureImporter</Importer>
@@ -63,6 +54,15 @@
       <Options>None</Options>
       <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Matthew\menuButton.xnb</Output>
       <Time>2014-10-26T22:25:06.0920162+10:30</Time>
+    </Item>
+    <Item>
+      <Source>Simon\DebugFont.spritefont</Source>
+      <Name>Simon\DebugFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Game Developement\Ascension\AscensionFlindersUni\Ascension2\Ascension2\Ascension2\bin\x86\Debug\Content\Simon\DebugFont.xnb</Output>
+      <Time>2014-10-13T12:17:22.3628603+10:30</Time>
     </Item>
     <Item>
       <Source>Matthew\score.spritefont</Source>
