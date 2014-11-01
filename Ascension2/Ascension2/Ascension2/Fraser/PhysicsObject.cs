@@ -416,24 +416,28 @@ namespace Ascension2.Fraser
             {
                 Vector2 otherPos = currentCollisions[i].other.position;
                 Vector2 otherSize = currentCollisions[i].other.size;
-                if ((int)otherPos.X <= (int)position.X + (int)size.X + 1)
+                if (isBetweenValues((int)position.X + (int)size.X + 1, (int)otherPos.X, (int)otherPos.X + (int)otherSize.X))
+                //if ((int)otherPos.X <= (int)position.X + (int)size.X + 1)
                 {
-                    right = false;
+                    //right = false;
                     //position.X = otherPos.X - 1;
                 }
-                if ((int)otherPos.X + (int)otherSize.X + 1 >= (int)position.X)
+                if (isBetweenValues((int)position.X - 1, (int)otherPos.X, (int)otherPos.X + (int)otherSize.X))
+                //if ((int)otherPos.X + (int)otherSize.X + 1 >= (int)position.X)
                 {
-                    left = false;
+                    //left = false;
                     //position.X = otherPos.X + otherSize.X;
                 }
-                if ((int)otherPos.Y <= (int)position.Y + (int)size.Y + 1)
+                if (isBetweenValues((int)position.Y - 1, (int)otherPos.Y, (int)otherPos.Y + (int)otherSize.Y))
+                //if ((int)otherPos.Y <= (int)position.Y + (int)size.Y + 1)
                 {
-                    up = false;
+                    //down = false;
                     // position.Y = otherPos.Y;
                 }
-                if ((int)otherPos.Y + (int)otherSize.Y + 1 >= (int)position.Y)
+                if (isBetweenValues((int)position.Y + (int)size.Y + 1, (int)otherPos.Y, (int)otherPos.Y + (int)otherSize.Y))
+                //if ((int)otherPos.Y + (int)otherSize.Y + 1 >= (int)position.Y)
                 {
-                    down = false;
+                    //up = false;
                 }
             }
             if (currentPoints.Length > 0) { 

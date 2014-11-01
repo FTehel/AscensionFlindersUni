@@ -111,7 +111,7 @@ namespace Ascension2
             scoreFontD = Content.Load<SpriteFont>("Matthew/score");
             scoreFontPosD = new Vector2((screenWidth / 2)+2, screenHeight - 73);
 
-            lFuel = new lowFuel(Content.Load<Texture2D>("Matthew/lh"), graphics.GraphicsDevice);
+            //lFuel = new lowFuel(Content.Load<Texture2D>("Matthew/lh"), graphics.GraphicsDevice);
 
             
         }
@@ -198,11 +198,11 @@ namespace Ascension2
                     break;
                 case GameState.Playing:
                     a += 1;
-                    lFuel.Update();
+                    //lFuel.Update();
                     if (btnMenu.isClicked == true) CurrentGameState = GameState.MainMenu;
                     btnMenu.Update(mouse);
                     if (player.getFuelLevel >= 0) { fuel.Update(player.getFuelLevel, gameTime); }
-                    if (fuel.getWidth() <= 30) { lFuel.visible = true; } else { lFuel.visible = false; }
+                    //if (fuel.getWidth() <= 30) { lFuel.visible = true; } else { lFuel.visible = false; }
                     updateFunction(gameTime);
                     break;
             }
@@ -239,7 +239,7 @@ namespace Ascension2
                     break;
                 case GameState.Playing:               
                     drawLevel(thisLevel);
-                    lFuel.Draw(spriteBatch);
+                    //lFuel.Draw(spriteBatch);
                     string output = a.ToString();
                     
                     Vector2 FontOrigin = scoreFont.MeasureString(output) / 2;
