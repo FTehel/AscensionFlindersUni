@@ -9,7 +9,7 @@ namespace Ascension2
     public class Floor
     {
         int height = 0;
-        public int[] walls = new int[0];
+        public int[] walls = new Wall[0];
 
         public Floor below;
         public Floor above;
